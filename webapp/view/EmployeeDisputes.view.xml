@@ -1,0 +1,45 @@
+<mvc:View
+    controllerName="my.report.zmydisputes.controller.EmployeeDisputes"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="disputesPage" title="Danh Sách Đơn Khiếu Nại Thắc Mắc" showHeader="true">
+        <content>
+            <Table id="disputesTable" 
+                   items="{/MyDisputes}"
+                   mode="SingleSelectLeft"
+                   growing="true">
+                <headerToolbar>
+                    <OverflowToolbar id="disputeHeader">
+                        <Title id="disputeTitle" text="Danh sách đơn đã gửi" level="H2"/>
+                        <ToolbarSpacer id="tableSpacer"/>
+                        <Button id="btnCancel" 
+                                text="Hủy Đơn Chọn" 
+                                type="Reject" 
+                                icon="sap-icon://decline" 
+                                press="onCancelDispute"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                
+                <columns>
+                    <Column id="colDispId"><Text id="txtColId" text="Mã khiếu nại" /></Column>
+                    <Column id="colDispDate"><Text id="txtColDate" text="Ngày công thắc mắc" /></Column>
+                    <Column id="colType"><Text id="txtColType" text="Loại yêu cầu" /></Column>
+                    <Column id="colComment"><Text id="txtColComment" text="Lý do phản hồi" /></Column>
+                    <Column id="colDispStatus"><Text id="txtColStatus" text="Trạng thái phê duyệt" /></Column>
+                </columns>
+                
+                <items>
+                    <ColumnListItem id="disputeRow">
+                        <cells>
+                            <Text id="cellDispId" text="{DisputeId}" />
+                            <Text id="cellWorkDate" text="{path: 'WorkDate', type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}" />
+                            <Text id="cellReqType" text="{RequestType}" />
+                            <Text id="cellComment" text="{EmployeeComment}" />
+                            <ObjectStatus id="cellStatus" text="{DisputeStatus}" state="{= ${DisputeStatus} === 'APPROVED' ? 'Success' : (${DisputeStatus} === 'CANCELLED' ? 'Error' : 'None') }" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

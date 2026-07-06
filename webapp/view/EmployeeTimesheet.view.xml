@@ -1,0 +1,48 @@
+<mvc:View
+    controllerName="my.report.zmydisputes.controller.EmployeeTimesheet"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="timesheetPage" title="Lịch Sử Chấm Công Của Tôi" showHeader="true">
+        <content>
+            <Table id="timesheetTable" 
+                   items="{/AttendanceHistory}"
+                   mode="SingleSelectLeft"
+                   growing="true"
+                   growingThreshold="20">
+                <headerToolbar>
+                    <OverflowToolbar id="tableHeader">
+                        <Title id="tableTitle" text="Dữ liệu quẹt thẻ thực tế" level="H2"/>
+                        <ToolbarSpacer id="timesheetSpacer"/>
+                        <Button id="btnSubmitReport" 
+                                text="Gửi đơn giải trình" 
+                                type="Emphasized" 
+                                icon="sap-icon://request" 
+                                press="onPressSubmitDispute"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="colDate"><Text id="lblDate" text="Ngày làm việc" /></Column>
+                    <Column id="colShift"><Text id="lblShift" text="Mã ca" /></Column>
+                    <Column id="colIn"><Text id="lblIn" text="Giờ vào (Actual In)" /></Column>
+                    <Column id="colOut"><Text id="lblOut" text="Giờ ra (Actual Out)" /></Column>
+                    <Column id="colHours"><Text id="lblHours" text="Số giờ làm" /></Column>
+                    <Column id="colOt"><Text id="lblOt" text="Giờ OT" /></Column>
+                    <Column id="colStatus"><Text id="lblStatus" text="Trạng thái" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="rowTemplate">
+                        <cells>
+                            <Text id="cellTsDate" text="{path: 'WorkDate', type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}" />
+                            <Text id="cellTsShift" text="{ShiftId}" />
+                            <Text id="cellTsIn" text="{path: 'ActualIn', formatter: '.formatEdmTime'}" />
+                            <Text id="cellTsOut" text="{path: 'ActualOut', formatter: '.formatEdmTime'}" />
+                            <Text id="cellTsHours" text="{WorkHours}" />
+                            <Text id="cellTsOt" text="{OtHours}" />
+                            <ObjectStatus id="cellTsStatus" text="{Status}" state="{= ${Status} === 'COMPLETED' ? 'Success' : 'Warning' }" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

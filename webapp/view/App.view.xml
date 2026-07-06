@@ -1,0 +1,33 @@
+<mvc:View
+    controllerName="my.report.zmydisputes.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt">
+    <tnt:ToolPage id="toolPage">
+        
+        <tnt:header>
+            <tnt:ToolHeader id="appHeader">
+                <Button id="navButton" icon="sap-icon://menu2" type="Transparent" press="onSideNavButtonPress"/>
+                <Title id="appTitle" text="Cổng Thông Tin Nhân Viên (ESS Portal)" />
+                <ToolbarSpacer id="headerSpacer" />
+                <tnt:ToolHeaderUtilitySeparator id="headerSeparator" />
+                <Avatar id="userAvatar" src="sap-icon://employee" displaySize="XS"/>
+            </tnt:ToolHeader>
+        </tnt:header>
+
+        <tnt:sideContent>
+            <tnt:SideNavigation id="sideNavigation" selectedKey="myCalendar" itemSelect="onSideItemSelect">
+                <tnt:NavigationList id="navigationList">
+                    <tnt:NavigationListItem id="menuCalendar" text="Lịch Làm Việc Của Tôi" icon="sap-icon://calendar" key="myCalendar" />
+                    <tnt:NavigationListItem id="menuTimesheet" text="Lịch Sử Chấm Công" icon="sap-icon://customer-history" key="myTimesheet" />
+                    <tnt:NavigationListItem id="menuDisputes" text="Đơn Khiếu Nại (Disputes)" icon="sap-icon://alert" key="myDisputes" />
+                </tnt:NavigationList>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+
+        <tnt:mainContents>
+            <App id="pageContainer" />
+        </tnt:mainContents>
+
+    </tnt:ToolPage>
+</mvc:View>

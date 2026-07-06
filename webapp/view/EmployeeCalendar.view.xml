@@ -1,0 +1,42 @@
+<mvc:View
+    controllerName="my.report.zmydisputes.controller.EmployeeCalendar"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:unified="sap.ui.unified">
+    <Page id="calendarPage" title="Lịch Làm Việc Cá Nhân" showHeader="true">
+        <content>
+            <PlanningCalendar
+                id="planningCalendar"
+                startDate="{path: '$custom>/currentDate'}"
+                rows="{calendarModel>/CalendarRows}"
+                viewKey="D"
+                appointmentSelect="onAppointmentSelect">
+                
+                <views>
+                    <PlanningCalendarView id="viewDay" key="D" intervalType="Day" description="Xem theo Ngày" />
+                    <PlanningCalendarView id="viewMonth" key="M" intervalType="Month" description="Xem theo Tháng" />
+                </views>
+                <rows>
+                    <PlanningCalendarRow
+                        id="calendarRow"
+                        icon="sap-icon://employee"
+                        title="{calendarModel>EmployeeName}"
+                        text="Nhà máy / Bộ phận: {calendarModel>DeptId}"
+                        appointments="{path: 'calendarModel>Appointments', templateShareable: false}">
+                        <appointments>
+                            <unified:CalendarAppointment
+                                id="appointmentTemplate"
+                                startDate="{calendarModel>StartDate}" 
+                                endDate="{calendarModel>EndDate}" 
+                                icon="sap-icon://work-history"
+                                title="{calendarModel>ShiftId}" 
+                                text="{calendarModel>ShiftName}"
+                                type="{calendarModel>ColorType}">
+                            </unified:CalendarAppointment>
+                        </appointments>
+                    </PlanningCalendarRow>
+                </rows>
+            </PlanningCalendar>
+        </content>
+    </Page>
+</mvc:View>

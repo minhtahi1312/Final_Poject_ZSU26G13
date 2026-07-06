@@ -1,0 +1,156 @@
+{
+    "_version": "1.48.0",
+    "sap.app": {
+        "id": "my.report.zmydisputes",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:lrop",
+            "version": "1.25.0",
+            "toolsId": "1e2bbbbd-8eee-4726-8627-0653fde79dbc"
+        },
+        "dataSources": {
+            "ZSB_TIMESHEET_26_V2_VAN": {
+                "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZSB_TIMESHEET_26_V2_VAN',Version='0001')/$value/",
+                "type": "ODataAnnotation",
+                "settings": {
+                    "localUri": "localService/mainService/ZSB_TIMESHEET_26_V2_VAN.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
+                }
+            },
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZSB_TIMESHEET_26_V2/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "ZSB_TIMESHEET_26_V2_VAN",
+                        "annotation"
+                    ],
+                    "localUri": "localService/mainService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "rootView": {
+            "viewName": "my.report.zmydisputes.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.108.33",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.ushell": {},
+                "sap.f": {},
+                "sap.tnt": {},
+                "sap.ui.unified": {},
+                "sap.ui.comp": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "my.report.zmydisputes.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false,
+                    "metadataUrlParams": {
+                        "sap-value-list": "none"
+                    }
+                }
+            },
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            }
+        },
+        "resources": {
+            "css": []
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "viewPath": "my.report.zmydisputes.view",
+                "controlId": "pageContainer",
+                "controlAggregation": "pages",
+                "async": true
+            },
+            "routes": [
+                {
+                    "name": "EmployeeCalendar",
+                    "pattern": "",
+                    "target": ["EmployeeCalendarTarget"]
+                },
+                {
+                    "name": "EmployeeTimesheet",
+                    "pattern": "my-timesheet",
+                    "target": ["EmployeeTimesheetTarget"]
+                },
+                {
+                    "name": "EmployeeDisputes",
+                    "pattern": "my-disputes",
+                    "target": ["EmployeeDisputesTarget"]
+                }
+            ],
+            "targets": {
+                "EmployeeCalendarTarget": {
+                    "viewName": "EmployeeCalendar",
+                    "viewLevel": 1
+                },
+                "EmployeeTimesheetTarget": {
+                    "viewName": "EmployeeTimesheet",
+                    "viewLevel": 1
+                },
+                "EmployeeDisputesTarget": {
+                    "viewName": "EmployeeDisputes",
+                    "viewLevel": 1
+                }
+            }
+        }
+    }
+}
