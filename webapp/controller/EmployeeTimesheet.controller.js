@@ -8,7 +8,7 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("my.report.zmydisputes.controller.EmployeeTimesheet", {
-
+        
         onInit: function () {
             // Khởi tạo tự động nhận OData Model mặc định từ manifest
         },
@@ -84,60 +84,74 @@ sap.ui.define([
             }
 
             // Lấy thông tin dòng đang chọn theo chuẩn Freestyle
-            var oTable = this.byId("timesheetTable");
-            var oSelectedItem = oTable.getSelectedItem();
+          var oSelectedItem = this.byId("timesheetTable").getSelectedItem();
+var oContext      = oSelectedItem.getBindingContext();
+
+// --- LẤY ĐỘNG TOÀN BỘ GIÁ TRỊ TỪ ROW ĐƯỢC CHỌN ---
+var sPernr   = oContext.getProperty("Pernr");     // Lấy động Mã nhân viên từ dòng được tích
+var oDate    = oContext.getProperty("WorkDate");  // Lấy động Ngày làm việc từ dòng được tích
+var sShiftId = oContext.getProperty("ShiftId");   // Lấy động Mã ca làm việc từ dòng được tích
+
+// Kiểm tra phòng hờ nếu dữ liệu dòng chọn bị thiếu trường bắt buộc
+if (!sPernr || !oDate || !sShiftId) {
+    sap.m.MessageBox.error("Không thể xác định thông tin dòng được chọn. Vui lòng thử lại!");
+    sap.ui.core.BusyIndicator.hide();
+    return;
+}
+
+// Định dạng lại ngày công sang chuỗi yyyy-MM-ddTHH:mm:ss khớp chuẩn OData Key
+var sYear          = oDate.getFullYear();
+var sMonth         = String(oDate.getMonth() + 1).padStart(2, '0');
+var sDay           = String(oDate.getDate()).padStart(2, '0');
+var sFormattedDate = sYear + "-" + sMonth + "-" + sDay + "T00:00:00";
+
+var sBoundPath = "/createReport";
+// Hàm biến đổi giờ sang định dạng OData V2 Edm.Time
+var formatTimeForODataV2 = function (sTime) {
+    if (!sTime) return null;
+    var aParts = sTime.split(":");
+    var iMs = (parseInt(aParts[0], 10) * 3600 + parseInt(aParts[1], 10) * 60 + parseInt(aParts[2], 10)) * 1000;
+    return { __edmType: "Edm.Time", ms: iMs };
+};
+
+// Bật màn hình chờ Loading
+BusyIndicator.show(0);
+// Gọi Action Function Import xuống Backend RAP 
+oModel.callFunction(sBoundPath, {
+    method: "POST",
+    urlParameters: {
+        "Pernr":            sPernr,       
+    "WorkDate":         oDate,
+    "ShiftId":          sShiftId,     
+    
+    // 4 tham số nội dung phải viết THƯỜNG toàn bộ 
+    "request_type":     sRequestType,
+    "proposed_in":      formatTimeForODataV2(sProposedIn),
+    "proposed_out":     formatTimeForODataV2(sProposedOut),
+    "employee_comment": sEmployeeComment
+    },
+    success: function (oData, response) {
+        BusyIndicator.hide();
+        MessageToast.show("Đơn giải trình đã gửi thành công!");
+        oDialog.close();
+
+        oView.byId("tpProposedIn").setValue("");
+        oView.byId("tpProposedOut").setValue("");
+        oView.byId("inputReason").setValue("");
+        oModel.refresh(true); 
+    }.bind(this),
+
+    error: function (oError) {
+        BusyIndicator.hide();
+        var sMsg = "Gửi thất bại!";
+        try {
+            var oErrObj = JSON.parse(oError.responseText);
+            sMsg += " Lỗi: " + oErrObj.error.message.value;
+        } catch (e) { }
+        MessageBox.error(sMsg);
+    }
+});
             
-            var oContext         = oSelectedItem.getBindingContext();
-            var sPersonnelNumber = oContext.getProperty("PersonnelNumber");
-            var oWorkDate        = oContext.getProperty("WorkDate");
-            var sSequenceNumber  = oContext.getProperty("SequenceNumber"); 
-
-            // Hàm biến đổi giờ sang định dạng OData V2 Edm.Time
-            var formatTimeForODataV2 = function (sTime) {
-                if (!sTime) return null;
-                var aParts = sTime.split(":");
-                var iMs = (parseInt(aParts[0], 10) * 3600 + parseInt(aParts[1], 10) * 60 + parseInt(aParts[2], 10)) * 1000;
-                return { __edmType: "Edm.Time", ms: iMs };
-            };
-
-            // Bật màn hình chờ Loading
-            BusyIndicator.show(0);
-
-            // Gọi Action Function Import xuống Backend RAP
-            oModel.callFunction("/createReport", {
-                method: "POST",
-                functionParameters: {
-                    PersonnelNumber:  sPersonnelNumber,
-                    WorkDate:         oWorkDate,
-                    SequenceNumber:   sSequenceNumber, 
-                    request_type:     sRequestType,
-                    proposed_in:      formatTimeForODataV2(sProposedIn),
-                    proposed_out:     formatTimeForODataV2(sProposedOut),
-                    employee_comment: sEmployeeComment
-                },
-                success: function (oData, response) {
-                    BusyIndicator.hide();
-                    MessageToast.show("Đơn giải trình đã gửi thành công!");
-                    oDialog.close();
-
-                    // Xóa sạch dữ liệu trên form để lần sau nhập tiếp
-                    oView.byId("tpProposedIn").setValue("");
-                    oView.byId("tpProposedOut").setValue("");
-                    oView.byId("inputReason").setValue("");
-
-                    oModel.refresh(true); // Tải lại bảng Timesheet để cập nhật thông tin
-                }.bind(this),
-
-                error: function (oError) {
-                    BusyIndicator.hide();
-                    var sMsg = "Gửi thất bại!";
-                    try {
-                        var oErrObj = JSON.parse(oError.responseText);
-                        sMsg += " Lỗi: " + oErrObj.error.message.value;
-                    } catch (e) { }
-                    MessageBox.error(sMsg);
-                }
-            });
         },
 
         /**

@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <Dialog id="disputeDialog" title="Submit Dispute" contentWidth="400px">
+        <content>
+            <VBox id="vboxContainer" class="sapUiSmallMargin">
+                <Label id="lblRequestType" text="Request Type" required="true" class="sapUiSmallMarginTop" />
+                <Select id="selectRequestType" width="100%" items="{/ZI_REQ_TYPE_VH_26}">
+    <core:Item id="itemReqType" key="{RequestType}" text="{RequestTypeText}" />
+</Select>
+
+                <Label id="lblProposedIn" text="Proposed In Time" required="true" class="sapUiSmallMarginTop" />
+                <TimePicker id="tpProposedIn" width="100%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="Select In Time" />
+
+                <Label id="lblProposedOut" text="Proposed Out Time" required="true" class="sapUiSmallMarginTop" />
+                <TimePicker id="tpProposedOut" width="100%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="Select Out Time" />
+
+                <Label id="lblReason" text="Employee Comment" required="true" class="sapUiSmallMarginTop" />
+                <TextArea id="inputReason" width="100%" rows="4" placeholder="Enter your reason here..." />
+            </VBox>
+        </content>
+        <buttons>
+            <Button id="btnSubmit" text="Submit" type="Emphasized" press=".onConfirmSubmit" />
+            <Button id="btnCancelDialog" text="Cancel" press=".onCancelSubmit" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

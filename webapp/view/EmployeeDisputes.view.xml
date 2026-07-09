@@ -2,7 +2,7 @@
     controllerName="my.report.zmydisputes.controller.EmployeeDisputes"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page id="disputesPage" title="Danh Sách Đơn Khiếu Nại Thắc Mắc" showHeader="true">
+    <Page id="disputesPage" title="Lịch Sử Chấm Công Của Tôi" showHeader="true">
         <content>
             <Table id="disputesTable" 
                    items="{/MyDisputes}"
@@ -10,7 +10,7 @@
                    growing="true">
                 <headerToolbar>
                     <OverflowToolbar id="disputeHeader">
-                        <Title id="disputeTitle" text="Danh sách đơn đã gửi" level="H2"/>
+                        <Title id="disputeTitle" text="Dữ liệu quét thẻ thực tế" level="H2"/>
                         <ToolbarSpacer id="tableSpacer"/>
                         <Button id="btnCancel" 
                                 text="Hủy Đơn Chọn" 
@@ -20,26 +20,65 @@
                     </OverflowToolbar>
                 </headerToolbar>
                 
-                <columns>
-                    <Column id="colDispId"><Text id="txtColId" text="Mã khiếu nại" /></Column>
-                    <Column id="colDispDate"><Text id="txtColDate" text="Ngày công thắc mắc" /></Column>
-                    <Column id="colType"><Text id="txtColType" text="Loại yêu cầu" /></Column>
-                    <Column id="colComment"><Text id="txtColComment" text="Lý do phản hồi" /></Column>
-                    <Column id="colDispStatus"><Text id="txtColStatus" text="Trạng thái phê duyệt" /></Column>
-                </columns>
-                
-                <items>
-                    <ColumnListItem id="disputeRow">
-                        <cells>
-                            <Text id="cellDispId" text="{DisputeId}" />
-                            <Text id="cellWorkDate" text="{path: 'WorkDate', type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}" />
-                            <Text id="cellReqType" text="{RequestType}" />
-                            <Text id="cellComment" text="{EmployeeComment}" />
-                            <ObjectStatus id="cellStatus" text="{DisputeStatus}" state="{= ${DisputeStatus} === 'APPROVED' ? 'Success' : (${DisputeStatus} === 'CANCELLED' ? 'Error' : 'None') }" />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-            </Table>
+                 <columns>
+
+        <Column id="colWorkDate">
+            <Text id="txtWorkDate" text="Ngày làm việc"/>
+        </Column>
+
+        <Column id="colRequestType">
+            <Text id="txtRequestType" text="Loại yêu cầu"/>
+        </Column>
+
+        <Column id="colProposedIn">
+            <Text id="txtProposedIn" text="Giờ vào đề xuất"/>
+        </Column>
+
+        <Column id="colProposedOut">
+            <Text id="txtProposedOut" text="Giờ ra đề xuất"/>
+        </Column>
+
+        <Column id="colComment">
+            <Text id="txtComment" text="Lý do"/>
+        </Column>
+
+        <Column id="colStatus">
+            <Text id="txtStatus" text="Trạng thái"/>
+        </Column>
+
+    </columns>
+
+    <items>
+        <ColumnListItem id="itemDispute">
+            <cells>
+
+                <Text id="txtDate"
+                      text="{path:'WorkDate',
+                      type:'sap.ui.model.type.Date',
+                      formatOptions:{style:'medium'}}"/>
+
+                <Text id="txtReqType"
+                      text="{RequestType}"/>
+
+                <Text id="txtIn"
+                      text="{path:'ProposedIn',
+                      type:'sap.ui.model.type.Time'}"/>
+
+                <Text id="txtOut"
+                      text="{path:'ProposedOut',
+                      type:'sap.ui.model.type.Time'}"/>
+
+                <Text id="txtReason"
+                      text="{EmployeeComment}"/>
+
+                <ObjectStatus id="objStatus"
+                              text="{DisputeStatus}"/>
+
+            </cells>
+        </ColumnListItem>
+    </items>
+
+</Table>
         </content>
     </Page>
 </mvc:View>

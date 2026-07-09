@@ -1,554 +1,900 @@
-<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
-        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="SAP__common"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="Org.OData.Core.V1" Alias="SAP__core"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PDF',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
-    </edmx:Reference>
-    <edmx:Reference Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='SAP__SELF',Version='0001',SAP__Origin='')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-        <edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
-    </edmx:Reference>
-    <edmx:DataServices m:DataServiceVersion="2.0">
-        <Schema Namespace="cds_zui_timesheet_26" xml:lang="de" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
-            <EntityType Name="HR_DashboardType" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="SeqNo"/>
-                    <PropertyRef Name="Pernr"/>
-                    <PropertyRef Name="WorkDate"/>
-                </Key>
-                <Property Name="SeqNo" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="NonNegative" sap:label="zweistellige Nummer" sap:quickinfo="Zweistellige Nummer"/>
-                <Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Personalnummer"/>
-                <Property Name="WorkDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Datum"/>
-                <Property Name="ShiftId" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label=""/>
-                <Property Name="ActIn" Type="Edm.Time" Precision="0" sap:label="Uhrzeit" sap:quickinfo="Tageszeit"/>
-                <Property Name="ActOut" Type="Edm.Time" Precision="0" sap:label="Uhrzeit" sap:quickinfo="Tageszeit"/>
-                <Property Name="WorkHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label=""/>
-                <Property Name="OtHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label=""/>
-                <Property Name="RecordStatus" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label=""/>
-            </EntityType>
-            <EntityType Name="MyDisputesType" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="DisputeId"/>
-                </Key>
-                <Property Name="DisputeId" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:heading="" sap:quickinfo="16 byte UUID in 16 bytes (raw format)"/>
-                <Property Name="PersonnelNumber" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="Personalnummer"/>
-                <Property Name="WorkDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Datum" sap:heading=""/>
-                <Property Name="ProposedIn" Type="Edm.Time" Precision="0" sap:label="Uhrzeit" sap:heading="" sap:quickinfo="Tageszeit"/>
-                <Property Name="ProposedOut" Type="Edm.Time" Precision="0" sap:label="Uhrzeit" sap:heading="" sap:quickinfo="Tageszeit"/>
-                <Property Name="RequestType" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label=""/>
-                <Property Name="EmployeeComment" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="char255" sap:heading=""/>
-                <Property Name="DisputeStatus" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Characterfeld der Länge 10" sap:heading=""/>
-            </EntityType>
-            <EntityType Name="ZI_REQ_TYPE_VH_26Type" sap:value-list="true" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="DomainName"/>
-                    <PropertyRef Name="Language"/>
-                    <PropertyRef Name="Status"/>
-                    <PropertyRef Name="ValuePosition"/>
-                    <PropertyRef Name="Version"/>
-                    <PropertyRef Name="RequestType"/>
-                </Key>
-                <Property Name="DomainName" Type="Edm.String" Nullable="false" MaxLength="30" sap:display-format="UpperCase" sap:label="Domänenname" sap:quickinfo="Bezeichnung einer Domäne"/>
-                <Property Name="Language" Type="Edm.String" Nullable="false" MaxLength="2" sap:label="Sprache" sap:quickinfo="Sprachenschlüssel"/>
-                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="1" sap:display-format="UpperCase" sap:label="Aktivierungsstand" sap:quickinfo="Aktivierungsstand eines Repository-Objektes"/>
-                <Property Name="ValuePosition" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Werteschlüssel" sap:quickinfo="Werteschlüssel zu einer Domäne"/>
-                <Property Name="Version" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Version" sap:quickinfo="Version des Eintrags (nicht benutzt)"/>
-                <Property Name="RequestType" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Unterer Wert" sap:heading="" sap:quickinfo="Werte für Domänen: Einzelwert/untere Grenze"/>
-                <Property Name="RequestTypeText" Type="Edm.String" MaxLength="60" sap:label="Kurzbeschreibung" sap:heading="" sap:quickinfo="Kurztext zu Festwerten"/>
-            </EntityType>
-            <EntityType Name="AttendanceHistoryType" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="PersonnelNumber"/>
-                    <PropertyRef Name="WorkDate"/>
-                    <PropertyRef Name="SequenceNumber"/>
-                </Key>
-                <Property Name="createReport_ac" Type="Edm.Boolean" sap:label="Dyn. Aktions-Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PersonnelNumber" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Personalnummer" sap:heading=""/>
-                <Property Name="WorkDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Datum" sap:heading=""/>
-                <Property Name="SequenceNumber" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="NonNegative" sap:label="zweistellige Nummer" sap:heading="" sap:quickinfo="Zweistellige Nummer"/>
-                <Property Name="ShiftId" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label=""/>
-                <Property Name="ActualIn" Type="Edm.Time" Precision="0" sap:label="Uhrzeit" sap:heading="" sap:quickinfo="Tageszeit"/>
-                <Property Name="ActualOut" Type="Edm.Time" Precision="0" sap:label="Uhrzeit" sap:heading="" sap:quickinfo="Tageszeit"/>
-                <Property Name="WorkHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label=""/>
-                <Property Name="OtHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label=""/>
-                <Property Name="Status" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label=""/>
-                <NavigationProperty Name="to_MyDisputes" Relationship="cds_zui_timesheet_26.assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" FromRole="FromRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" ToRole="ToRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
-            </EntityType>
-            <EntityType Name="SAP__Currency" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="CurrencyCode"/>
-                </Key>
-                <Property Name="CurrencyCode" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Währung" sap:semantics="currency-code"/>
-                <Property Name="ISOCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Iso-Code"/>
-                <Property Name="Text" Type="Edm.String" Nullable="false" MaxLength="15" sap:label="Kurztext"/>
-                <Property Name="DecimalPlaces" Type="Edm.Byte" Nullable="false" sap:label="Dezimalen"/>
-            </EntityType>
-            <EntityType Name="SAP__UnitOfMeasure" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="UnitCode"/>
-                </Key>
-                <Property Name="UnitCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Interne Maßeinheit" sap:semantics="unit-of-measure"/>
-                <Property Name="ISOCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="ISO-Code"/>
-                <Property Name="ExternalCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Kaufmännisch"/>
-                <Property Name="Text" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Maßeinheitentext"/>
-                <Property Name="DecimalPlaces" Type="Edm.Int16" sap:label="Dezimalstellen"/>
-            </EntityType>
-            <EntityType Name="SAP__DocumentDescription" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Id"/>
-                </Key>
-                <Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID"/>
-                <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
-                <Property Name="CreatedAt" Type="Edm.DateTime" Nullable="false" Precision="0" sap:label="Zeitstempel"/>
-                <Property Name="FileName" Type="Edm.String" Nullable="false" MaxLength="256"/>
-                <Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="256"/>
-                <NavigationProperty Name="Format" Relationship="cds_zui_timesheet_26.to_format" FromRole="FromRole_to_format" ToRole="ToRole_to_format"/>
-                <NavigationProperty Name="TableColumns" Relationship="cds_zui_timesheet_26.to_tablecolumns" FromRole="FromRole_to_tablecolumns" ToRole="ToRole_to_tablecolumns"/>
-                <NavigationProperty Name="CoverPage" Relationship="cds_zui_timesheet_26.to_coverpage" FromRole="FromRole_to_coverpage" ToRole="ToRole_to_coverpage"/>
-                <NavigationProperty Name="Signature" Relationship="cds_zui_timesheet_26.to_signature" FromRole="FromRole_to_signature" ToRole="ToRole_to_signature"/>
-                <NavigationProperty Name="PDFStandard" Relationship="cds_zui_timesheet_26.to_pdfstandard" FromRole="FromRole_to_pdfstandard" ToRole="ToRole_to_pdfstandard"/>
-            </EntityType>
-            <EntityType Name="SAP__Format" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Id"/>
-                </Key>
-                <Property Name="FitToPage" Type="cds_zui_timesheet_26.SAP__FitToPage" Nullable="false"/>
-                <Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="FontSize" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Orientation" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="PaperSize" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="BorderSize" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="MarginSize" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="FontName" Type="Edm.String" Nullable="false" MaxLength="255" sap:label="Font Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-            </EntityType>
-            <EntityType Name="SAP__PDFStandard" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Id"/>
-                </Key>
-                <Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="UsePDFAConformance" Type="Edm.Boolean" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="DoEnableAccessibility" Type="Edm.Boolean" Nullable="false" sap:label="Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-            </EntityType>
-            <EntityType Name="SAP__TableColumns" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Id"/>
-                    <PropertyRef Name="Name"/>
-                    <PropertyRef Name="Header"/>
-                </Key>
-                <Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Header" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="HorizontalAlignment" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-            </EntityType>
-            <EntityType Name="SAP__CoverPage" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Title"/>
-                    <PropertyRef Name="Id"/>
-                    <PropertyRef Name="Name"/>
-                </Key>
-                <Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Value" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-            </EntityType>
-            <EntityType Name="SAP__Signature" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="Id"/>
-                </Key>
-                <Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="DoSign" Type="Edm.Boolean" Nullable="false" sap:label="Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Reason" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-            </EntityType>
-            <EntityType Name="SAP__ValueHelp" sap:content-version="1">
-                <Key>
-                    <PropertyRef Name="VALUEHELP"/>
-                </Key>
-                <Property Name="VALUEHELP" Type="Edm.String" Nullable="false"/>
-                <Property Name="FIELD_VALUE" Type="Edm.String" Nullable="false" MaxLength="10"/>
-                <Property Name="DESCRIPTION" Type="Edm.String"/>
-            </EntityType>
-            <ComplexType Name="SAP__FitToPage">
-                <Property Name="ErrorRecoveryBehavior" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Error behavior" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="IsEnabled" Type="Edm.Boolean" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="MinimumFontSize" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-            </ComplexType>
-            <Association Name="assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" sap:content-version="1">
-                <End Type="cds_zui_timesheet_26.AttendanceHistoryType" Multiplicity="1" Role="FromRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
-                <End Type="cds_zui_timesheet_26.MyDisputesType" Multiplicity="*" Role="ToRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
-            </Association>
-            <Association Name="to_format" sap:content-version="1">
-                <End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_format"/>
-                <End Type="cds_zui_timesheet_26.SAP__Format" Multiplicity="1" Role="ToRole_to_format"/>
-                <ReferentialConstraint>
-                    <Principal Role="FromRole_to_format">
-                        <PropertyRef Name="Id"/>
-                    </Principal>
-                    <Dependent Role="ToRole_to_format">
-                        <PropertyRef Name="Id"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="to_tablecolumns" sap:content-version="1">
-                <End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_tablecolumns"/>
-                <End Type="cds_zui_timesheet_26.SAP__TableColumns" Multiplicity="*" Role="ToRole_to_tablecolumns"/>
-                <ReferentialConstraint>
-                    <Principal Role="FromRole_to_tablecolumns">
-                        <PropertyRef Name="Id"/>
-                    </Principal>
-                    <Dependent Role="ToRole_to_tablecolumns">
-                        <PropertyRef Name="Id"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="to_coverpage" sap:content-version="1">
-                <End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_coverpage"/>
-                <End Type="cds_zui_timesheet_26.SAP__CoverPage" Multiplicity="*" Role="ToRole_to_coverpage"/>
-                <ReferentialConstraint>
-                    <Principal Role="FromRole_to_coverpage">
-                        <PropertyRef Name="Id"/>
-                    </Principal>
-                    <Dependent Role="ToRole_to_coverpage">
-                        <PropertyRef Name="Id"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="to_signature" sap:content-version="1">
-                <End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_signature"/>
-                <End Type="cds_zui_timesheet_26.SAP__Signature" Multiplicity="1" Role="ToRole_to_signature"/>
-                <ReferentialConstraint>
-                    <Principal Role="FromRole_to_signature">
-                        <PropertyRef Name="Id"/>
-                    </Principal>
-                    <Dependent Role="ToRole_to_signature">
-                        <PropertyRef Name="Id"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <Association Name="to_pdfstandard" sap:content-version="1">
-                <End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_pdfstandard"/>
-                <End Type="cds_zui_timesheet_26.SAP__PDFStandard" Multiplicity="1" Role="ToRole_to_pdfstandard"/>
-                <ReferentialConstraint>
-                    <Principal Role="FromRole_to_pdfstandard">
-                        <PropertyRef Name="Id"/>
-                    </Principal>
-                    <Dependent Role="ToRole_to_pdfstandard">
-                        <PropertyRef Name="Id"/>
-                    </Dependent>
-                </ReferentialConstraint>
-            </Association>
-            <EntityContainer Name="cds_zui_timesheet_26_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx pdf">
-                <EntitySet Name="SAP__Currencies" EntityType="cds_zui_timesheet_26.SAP__Currency" sap:content-version="1"/>
-                <EntitySet Name="SAP__UnitsOfMeasure" EntityType="cds_zui_timesheet_26.SAP__UnitOfMeasure" sap:content-version="1"/>
-                <EntitySet Name="SAP__MyDocumentDescriptions" EntityType="cds_zui_timesheet_26.SAP__DocumentDescription" sap:content-version="1"/>
-                <EntitySet Name="SAP__FormatSet" EntityType="cds_zui_timesheet_26.SAP__Format" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
-                <EntitySet Name="SAP__PDFStandardSet" EntityType="cds_zui_timesheet_26.SAP__PDFStandard" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
-                <EntitySet Name="SAP__TableColumnsSet" EntityType="cds_zui_timesheet_26.SAP__TableColumns" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
-                <EntitySet Name="SAP__CoverPageSet" EntityType="cds_zui_timesheet_26.SAP__CoverPage" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
-                <EntitySet Name="SAP__SignatureSet" EntityType="cds_zui_timesheet_26.SAP__Signature" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
-                <EntitySet Name="SAP__ValueHelpSet" EntityType="cds_zui_timesheet_26.SAP__ValueHelp" sap:content-version="1"/>
-                <EntitySet Name="HR_Dashboard" EntityType="cds_zui_timesheet_26.HR_DashboardType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
-                <EntitySet Name="MyDisputes" EntityType="cds_zui_timesheet_26.MyDisputesType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
-                <EntitySet Name="ZI_REQ_TYPE_VH_26" EntityType="cds_zui_timesheet_26.ZI_REQ_TYPE_VH_26Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
-                <EntitySet Name="AttendanceHistory" EntityType="cds_zui_timesheet_26.AttendanceHistoryType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
-                <AssociationSet Name="to_formatSet" Association="cds_zui_timesheet_26.to_format" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_format"/>
-                    <End EntitySet="SAP__FormatSet" Role="ToRole_to_format"/>
-                </AssociationSet>
-                <AssociationSet Name="to_pdfstandardSet" Association="cds_zui_timesheet_26.to_pdfstandard" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_pdfstandard"/>
-                    <End EntitySet="SAP__PDFStandardSet" Role="ToRole_to_pdfstandard"/>
-                </AssociationSet>
-                <AssociationSet Name="to_tablecolumnsSet" Association="cds_zui_timesheet_26.to_tablecolumns" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_tablecolumns"/>
-                    <End EntitySet="SAP__TableColumnsSet" Role="ToRole_to_tablecolumns"/>
-                </AssociationSet>
-                <AssociationSet Name="assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" Association="cds_zui_timesheet_26.assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="AttendanceHistory" Role="FromRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
-                    <End EntitySet="MyDisputes" Role="ToRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
-                </AssociationSet>
-                <AssociationSet Name="to_signatureSet" Association="cds_zui_timesheet_26.to_signature" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_signature"/>
-                    <End EntitySet="SAP__SignatureSet" Role="ToRole_to_signature"/>
-                </AssociationSet>
-                <AssociationSet Name="to_coverpageSet" Association="cds_zui_timesheet_26.to_coverpage" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
-                    <End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_coverpage"/>
-                    <End EntitySet="SAP__CoverPageSet" Role="ToRole_to_coverpage"/>
-                </AssociationSet>
-                <FunctionImport Name="createReport" ReturnType="cds_zui_timesheet_26.AttendanceHistoryType" EntitySet="AttendanceHistory" m:HttpMethod="POST" sap:action-for="cds_zui_timesheet_26.AttendanceHistoryType" sap:applicable-path="createReport_ac">
-                    <Parameter Name="PersonnelNumber" Type="Edm.String" Mode="In" MaxLength="8" sap:label="Personalnummer"/>
-                    <Parameter Name="WorkDate" Type="Edm.DateTime" Mode="In" Precision="0" sap:label="Datum" sap:display-format="Date"/>
-                    <Parameter Name="SequenceNumber" Type="Edm.String" Mode="In" MaxLength="2" sap:label="zweistellige Nummer"/>
-                    <Parameter Name="request_type" Type="Edm.String" Mode="In" MaxLength="30" sap:value-list="fixed-values"/>
-                    <Parameter Name="proposed_in" Type="Edm.Time" Mode="In" Precision="0" sap:label="Uhrzeit"/>
-                    <Parameter Name="proposed_out" Type="Edm.Time" Mode="In" Precision="0" sap:label="Uhrzeit"/>
-                    <Parameter Name="employee_comment" Type="Edm.String" Mode="In" MaxLength="255"/>
-                </FunctionImport>
-            </EntityContainer>
-            <Annotations Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/createReport/request_type" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Common.ValueList">
-                    <Record>
-                        <PropertyValue Property="Label" String=""/>
-                        <PropertyValue Property="CollectionPath" String="ZI_REQ_TYPE_VH_26"/>
-                        <PropertyValue Property="SearchSupported" Bool="false"/>
-                        <PropertyValue Property="Parameters">
-                            <Collection>
-                                <Record Type="Common.ValueListParameterInOut">
-                                    <PropertyValue Property="LocalDataProperty" PropertyPath="request_type"/>
-                                    <PropertyValue Property="ValueListProperty" String="RequestType"/>
-                                </Record>
-                                <Record Type="Common.ValueListParameterDisplayOnly">
-                                    <PropertyValue Property="ValueListProperty" String="RequestTypeText"/>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Common.ValueListWithFixedValues"/>
-                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/createReport/employee_comment" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/createReport/proposed_in" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/createReport/proposed_out" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/AttendanceHistory" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Capabilities.FilterRestrictions">
-                    <Record>
-                        <PropertyValue Property="NonFilterableProperties">
-                            <Collection>
-                                <PropertyPath>createReport_ac</PropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="Capabilities.NavigationRestrictions">
-                    <Record>
-                        <PropertyValue Property="RestrictedProperties">
-                            <Collection>
-                                <Record>
-                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_MyDisputes"/>
-                                    <PropertyValue Property="InsertRestrictions">
-                                        <Record>
-                                            <PropertyValue Property="Insertable" Bool="false"/>
-                                        </Record>
-                                    </PropertyValue>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__core.OptimisticConcurrency">
-                    <Collection/>
-                </Annotation>
-                <Annotation Term="Capabilities.SortRestrictions">
-                    <Record>
-                        <PropertyValue Property="NonSortableProperties">
-                            <Collection>
-                                <PropertyPath>createReport_ac</PropertyPath>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="Org.OData.Capabilities.V1.BatchSupport">
-                    <Record Type="Org.OData.Capabilities.V1.BatchSupportType">
-                        <PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="true"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__CodeList.CurrencyCodes">
-                    <Record>
-                        <PropertyValue Property="Url" String="./$metadata"/>
-                        <PropertyValue Property="CollectionPath" String="SAP__Currencies"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__CodeList.UnitsOfMeasure">
-                    <Record>
-                        <PropertyValue Property="Url" String="./$metadata"/>
-                        <PropertyValue Property="CollectionPath" String="SAP__UnitsOfMeasure"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__PDF.Features">
-                    <Record>
-                        <PropertyValue Property="DocumentDescriptionReference" String="./$metadata"/>
-                        <PropertyValue Property="DocumentDescriptionCollection" String="SAP__MyDocumentDescriptions"/>
-                        <PropertyValue Property="ArchiveFormat" Bool="true"/>
-                        <PropertyValue Property="CoverPage" Bool="true"/>
-                        <PropertyValue Property="Signature" Bool="true"/>
-                        <PropertyValue Property="FitToPage" Bool="true"/>
-                        <PropertyValue Property="FontName" Bool="true"/>
-                        <PropertyValue Property="FontSize" Bool="true"/>
-                        <PropertyValue Property="Margin" Bool="true"/>
-                        <PropertyValue Property="Border" Bool="true"/>
-                        <PropertyValue Property="ResultSizeDefault" Int="20000"/>
-                        <PropertyValue Property="ResultSizeMaximum" Int="20000"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__CodeList.SAP__DocumentDescription">
-                    <Record>
-                        <PropertyValue Property="Url" String="./$metadata"/>
-                        <PropertyValue Property="CollectionPath" String="SAP__MyDocumentDescriptions"/>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__Currency/CurrencyCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__common.Text" Path="Text"/>
-                <Annotation Term="SAP__common.UnitSpecificScale" Path="DecimalPlaces"/>
-                <Annotation Term="SAP__CodeList.StandardCode" Path="ISOCode"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__UnitOfMeasure/UnitCode" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__common.Text" Path="Text"/>
-                <Annotation Term="SAP__common.UnitSpecificScale" Path="DecimalPlaces"/>
-                <Annotation Term="SAP__CodeList.StandardCode" Path="ISOCode"/>
-                <Annotation Term="SAP__CodeList.ExternalCode" Path="ExternalCode"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__UnitOfMeasure" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__core.AlternateKeys">
-                    <Collection>
-                        <Record>
-                            <PropertyValue Property="Key">
-                                <Collection>
-                                    <Record>
-                                        <PropertyValue Property="Name" Path="ExternalCode"/>
-                                        <PropertyValue Property="Alias" String="ExternalCode"/>
-                                    </Record>
-                                </Collection>
-                            </PropertyValue>
-                        </Record>
-                    </Collection>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__DocumentDescription/CreatedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__core.Computed"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__DocumentDescription/CreatedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__core.Computed"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__DocumentDescription" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__capabilties.InsertRestrictions">
-                    <Record>
-                        <PropertyValue Property="Insertable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__capabilties.UpdateRestrictions">
-                    <Record>
-                        <PropertyValue Property="Updatable" Bool="false"/>
-                        <PropertyValue Property="QueryOptions">
-                            <Record>
-                                <PropertyValue Property="SelectSupported" Bool="true"/>
-                            </Record>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__capabilties.DeleteRestrictions">
-                    <Record>
-                        <PropertyValue Property="Deletable" Bool="false"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__capabilties.FilterRestrictions">
-                    <Record>
-                        <PropertyValue Property="FilterExpressionRestrictions">
-                            <Collection>
-                                <Record>
-                                    <PropertyValue Property="Property" PropertyPath="Format/Orientation"/>
-                                    <PropertyValue Property="AllowedExpressions" String="Multivalue"/>
-                                </Record>
-                                <Record>
-                                    <PropertyValue Property="Property" PropertyPath="Format/PaperSize"/>
-                                    <PropertyValue Property="AllowedExpressions" String="Multivalue"/>
-                                </Record>
-                            </Collection>
-                        </PropertyValue>
-                    </Record>
-                </Annotation>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__Format/FitToPage/ErrorRecoveryBehavior" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__common.ValueListReferences">
-                    <Record>
-                        <PropertyValue Property="Url" String="./$metadata"/>
-                        <PropertyValue Property="CollectionPath" String="../../../../SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27ErrorRecoveryBehaviour%27"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__Format/FontName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__common.ValueListReferences">
-                    <Record>
-                        <PropertyValue Property="Url" String="./$metadata"/>
-                        <PropertyValue Property="CollectionPath" String="SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27FontName%27"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__Format/PaperSize" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__common.ValueListReferences">
-                    <Record>
-                        <PropertyValue Property="Url" String="./$metadata"/>
-                        <PropertyValue Property="CollectionPath" String="SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27PaperSize%27"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__Format/Orientation" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__common.ValueListReferences">
-                    <Record>
-                        <PropertyValue Property="Url" String="./$metadata"/>
-                        <PropertyValue Property="CollectionPath" String="SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27FontName%27"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
-            </Annotations>
-            <Annotations Target="cds_zui_timesheet_26.SAP__TableColumns/HorizontalAlignment" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-                <Annotation Term="SAP__common.ValueListReferences">
-                    <Record>
-                        <PropertyValue Property="Url" String="./$metadata"/>
-                        <PropertyValue Property="CollectionPath" String="SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27HorizontalAlignment%27"/>
-                    </Record>
-                </Annotation>
-                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
-            </Annotations>
-            <atom:link rel="self" href="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/sap/ZSB_TIMESHEET_26_V2/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
-            <atom:link rel="latest-version" href="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/sap/ZSB_TIMESHEET_26_V2/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
-        </Schema>
-    </edmx:DataServices>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="SAP__common"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Core.V1" Alias="SAP__core"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PDF',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+</edmx:Reference>
+<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='SAP__SELF',Version='0001',SAP__Origin='')/$value">
+<edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
+</edmx:Reference>
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="cds_zui_timesheet_26" xml:lang="en" sap:schema-version="1">
+<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Core.SchemaVersion" String="1.0.0"/>
+<EntityType Name="WorkingTimeType" sap:label="Working Time for all Employee" sap:content-version="1">
+<Key>
+<PropertyRef Name="Pernr"/>
+<PropertyRef Name="WorkDate"/>
+<PropertyRef Name="ShiftId"/>
+</Key>
+<Property Name="createReport_ac" Type="Edm.Boolean" sap:label="Dyn. Action Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Personnel Number" sap:creatable="false" sap:updatable="false"/>
+<Property Name="WorkDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Date" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ShiftId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Shift ID" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ActIn" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="ActOut" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="TotHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="Total Hours" sap:quickinfo="Total Hours in Company"/>
+<Property Name="WorkHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="Work Hours"/>
+<Property Name="OtHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="OT Hours"/>
+<Property Name="status" Type="Edm.String" MaxLength="10"/>
+<Property Name="dept_id" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Department"/>
+</EntityType>
+<EntityType Name="EmpShiftType" sap:label="Employee Shift Roster View" sap:content-version="1">
+<Key>
+<PropertyRef Name="Pernr"/>
+<PropertyRef Name="WorkDate"/>
+<PropertyRef Name="ShiftId"/>
+</Key>
+<Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Personnel Number" sap:updatable="false"/>
+<Property Name="WorkDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Date" sap:updatable="false"/>
+<Property Name="ShiftId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Shift ID" sap:updatable="false"/>
+<Property Name="EmployeeName" Type="Edm.String" MaxLength="40" sap:label="Employee/app.name" sap:quickinfo="Formatted Name of Employee or Applicant"/>
+<Property Name="DeptId" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Department"/>
+<Property Name="ShiftTimeIn" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="ShiftTimeOut" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="ShiftNextDay" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="General Flag" sap:quickinfo="General Flag (X or Blank)"/>
+<Property Name="GraceMins" Type="Edm.Int32" sap:label="INT4" sap:quickinfo="4 Byte Signed Integer"/>
+<NavigationProperty Name="to_Shift" Relationship="cds_zui_timesheet_26.assoc_55D14E3FB7A186D392737FE206EC711C" FromRole="FromRole_assoc_55D14E3FB7A186D392737FE206EC711C" ToRole="ToRole_assoc_55D14E3FB7A186D392737FE206EC711C"/>
+</EntityType>
+<EntityType Name="EmployeeType" sap:label="Employee Master Data View" sap:content-version="1">
+<Key>
+<PropertyRef Name="Pernr"/>
+</Key>
+<Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Personnel Number" sap:updatable="false"/>
+<Property Name="Ename" Type="Edm.String" MaxLength="40" sap:label="Employee/app.name" sap:quickinfo="Formatted Name of Employee or Applicant"/>
+<Property Name="DeptId" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Department"/>
+<Property Name="DeptName" Type="Edm.String" MaxLength="40" sap:label="Name" sap:quickinfo="Text, 40 Characters Long"/>
+<Property Name="RoleId" Type="Edm.String" MaxLength="6" sap:display-format="UpperCase" sap:label="Role" sap:quickinfo="Data Element for Role"/>
+<Property Name="RoleDesc" Type="Edm.String" MaxLength="40" sap:label="Name" sap:quickinfo="Text, 40 Characters Long"/>
+<Property Name="CardId" Type="Edm.String" MaxLength="20" sap:label="Carrd ID"/>
+</EntityType>
+<EntityType Name="HolidayType" sap:label="Holiday Configuration View" sap:content-version="1">
+<Key>
+<PropertyRef Name="Plant"/>
+<PropertyRef Name="HolDate"/>
+</Key>
+<Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant" sap:updatable="false"/>
+<Property Name="HolDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Date" sap:updatable="false"/>
+<Property Name="HolDesc" Type="Edm.String" MaxLength="40" sap:label="Name" sap:quickinfo="Text, 40 Characters Long"/>
+</EntityType>
+<EntityType Name="HR_DashboardType" sap:label="Dashboard Ket Qua Cham Cong (Timesheet)" sap:content-version="1">
+<Key>
+<PropertyRef Name="SeqNo"/>
+<PropertyRef Name="Pernr"/>
+<PropertyRef Name="WorkDate"/>
+</Key>
+<Property Name="SeqNo" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="NonNegative" sap:label="Two-digit number" sap:quickinfo="Two digit number"/>
+<Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Personnel Number"/>
+<Property Name="WorkDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Date"/>
+<Property Name="ShiftId" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Shift ID"/>
+<Property Name="ActIn" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="ActOut" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="WorkHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="Work Hours"/>
+<Property Name="OtHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="OT Hours"/>
+<Property Name="RecordStatus" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Record Status" sap:quickinfo="Timesheet Record Status"/>
+</EntityType>
+<EntityType Name="ScheduleType" sap:label="Shift Schedule Configuration View" sap:content-version="1">
+<Key>
+<PropertyRef Name="Plant"/>
+<PropertyRef Name="ShiftId"/>
+</Key>
+<Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant" sap:updatable="false"/>
+<Property Name="ShiftId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Shift ID" sap:updatable="false"/>
+<Property Name="StdHours" Type="Edm.Decimal" Precision="5" Scale="0"/>
+<Property Name="TimeIn" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="TimeOut" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="NextDay" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="General Flag" sap:quickinfo="General Flag (X or Blank)"/>
+<Property Name="GraceMins" Type="Edm.Int32" sap:label="INT4" sap:quickinfo="4 Byte Signed Integer"/>
+</EntityType>
+<EntityType Name="ShiftLookupType" sap:label="Shift Schedule Value Help" sap:content-version="1">
+<Key>
+<PropertyRef Name="Plant"/>
+<PropertyRef Name="ShiftId"/>
+</Key>
+<Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+<Property Name="ShiftId" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Shift ID"/>
+<Property Name="StdHours" Type="Edm.Decimal" Precision="5" Scale="0"/>
+<Property Name="TimeIn" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="TimeOut" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="NextDay" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="General Flag" sap:quickinfo="General Flag (X or Blank)"/>
+<Property Name="GraceMins" Type="Edm.Int32" sap:label="INT4" sap:quickinfo="4 Byte Signed Integer"/>
+</EntityType>
+<EntityType Name="MyDisputesType" sap:label="History Disputes" sap:content-version="1">
+<Key>
+<PropertyRef Name="DisputeId"/>
+</Key>
+<Property Name="DisputeId" Type="Edm.Guid" Nullable="false" sap:label="Mã Khiếu Nại" sap:quickinfo="16 Byte UUID in 16 Bytes (Raw Format)" sap:creatable="false" sap:updatable="false"/>
+<Property Name="PersonnelNumber" Type="Edm.String" MaxLength="8" sap:display-format="NonNegative" sap:label="Personnel Number" sap:creatable="false" sap:updatable="false"/>
+<Property Name="WorkDate" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Ngày làm việc" sap:quickinfo="Date" sap:creatable="false" sap:updatable="false"/>
+<Property Name="ProposedIn" Type="Edm.Time" Precision="0" sap:label="Giờ vào đề xuất" sap:quickinfo="Time"/>
+<Property Name="ProposedOut" Type="Edm.Time" Precision="0" sap:label="Giờ ra đề xuất" sap:quickinfo="Time"/>
+<Property Name="RequestType" Type="Edm.String" MaxLength="30" sap:display-format="UpperCase" sap:label="Loại yêu cầu" sap:quickinfo="Data Element for Request Type"/>
+<Property Name="EmployeeComment" Type="Edm.String" MaxLength="255" sap:display-format="UpperCase" sap:label="Ý kiến Nhân viên" sap:quickinfo="Char255"/>
+<Property Name="DisputeStatus" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Trạng thái Phê duyệt" sap:quickinfo="Character Field with Length 10"/>
+</EntityType>
+<EntityType Name="AttendanceHistoryType" sap:label="CDS View History User" sap:content-version="1">
+<Key>
+<PropertyRef Name="PersonnelNumber"/>
+<PropertyRef Name="WorkDate"/>
+<PropertyRef Name="SequenceNumber"/>
+</Key>
+<Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PersonnelNumber" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Employee ID" sap:quickinfo="Personnel Number"/>
+<Property Name="WorkDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Date"/>
+<Property Name="SequenceNumber" Type="Edm.String" Nullable="false" MaxLength="2" sap:display-format="NonNegative" sap:label="Seq No" sap:quickinfo="Two digit number"/>
+<Property Name="ShiftId" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Shift Code" sap:quickinfo="Shift ID"/>
+<Property Name="ActualIn" Type="Edm.Time" Precision="0" sap:label="Actual In" sap:quickinfo="Time"/>
+<Property Name="ActualOut" Type="Edm.Time" Precision="0" sap:label="Actual Out" sap:quickinfo="Time"/>
+<Property Name="WorkHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="Actual Hours" sap:quickinfo="Work Hours"/>
+<Property Name="OtHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="Overtime Hours" sap:quickinfo="OT Hours"/>
+<Property Name="Status" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Status Report" sap:quickinfo="Timesheet Record Status"/>
+<NavigationProperty Name="to_MyDisputes" Relationship="cds_zui_timesheet_26.assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" FromRole="FromRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" ToRole="ToRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
+</EntityType>
+<EntityType Name="OtPlanType" sap:label="Root View for Work Schedule and OT" sap:content-version="1">
+<Key>
+<PropertyRef Name="Pernr"/>
+<PropertyRef Name="PlanDate"/>
+</Key>
+<Property Name="Delete_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Update_mc" Type="Edm.Boolean" sap:label="Dyn. Method Control" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Pernr" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Personnel Number" sap:updatable="false"/>
+<Property Name="PlanDate" Type="Edm.DateTime" Nullable="false" Precision="0" sap:display-format="Date" sap:label="Date" sap:updatable="false"/>
+<Property Name="Plant" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+<Property Name="ShiftId" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Shift ID"/>
+<Property Name="IsOt" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="General Flag" sap:quickinfo="General Flag (X or Blank)"/>
+<Property Name="OtHours" Type="Edm.Decimal" Precision="5" Scale="2" sap:label="OT Hours"/>
+<Property Name="EmployeeName" Type="Edm.String" MaxLength="40" sap:label="Employee/app.name" sap:quickinfo="Formatted Name of Employee or Applicant"/>
+<Property Name="DeptId" Type="Edm.String" MaxLength="15" sap:display-format="UpperCase" sap:label="Department"/>
+<Property Name="ShiftTimeIn" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="ShiftTimeOut" Type="Edm.Time" Precision="0" sap:label="Time"/>
+<Property Name="ShiftNextDay" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="General Flag" sap:quickinfo="General Flag (X or Blank)"/>
+<Property Name="GraceMins" Type="Edm.Int32" sap:label="INT4" sap:quickinfo="4 Byte Signed Integer"/>
+<NavigationProperty Name="to_Shift" Relationship="cds_zui_timesheet_26.assoc_722B62FBB5D153F19457A8A064D3C73C" FromRole="FromRole_assoc_722B62FBB5D153F19457A8A064D3C73C" ToRole="ToRole_assoc_722B62FBB5D153F19457A8A064D3C73C"/>
+</EntityType>
+<EntityType Name="SAP__Currency" sap:content-version="1">
+<Key>
+<PropertyRef Name="CurrencyCode"/>
+</Key>
+<Property Name="CurrencyCode" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Currency" sap:semantics="currency-code"/>
+<Property Name="ISOCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="ISO code"/>
+<Property Name="Text" Type="Edm.String" Nullable="false" MaxLength="15" sap:label="Short text"/>
+<Property Name="DecimalPlaces" Type="Edm.Byte" Nullable="false" sap:label="Decimals"/>
+</EntityType>
+<EntityType Name="SAP__UnitOfMeasure" sap:content-version="1">
+<Key>
+<PropertyRef Name="UnitCode"/>
+</Key>
+<Property Name="UnitCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Internal UoM" sap:semantics="unit-of-measure"/>
+<Property Name="ISOCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="ISO Code"/>
+<Property Name="ExternalCode" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Commercial"/>
+<Property Name="Text" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Measurement Unit Txt"/>
+<Property Name="DecimalPlaces" Type="Edm.Int16" sap:label="Decimal Places"/>
+</EntityType>
+<EntityType Name="SAP__DocumentDescription" sap:content-version="1">
+<Key>
+<PropertyRef Name="Id"/>
+</Key>
+<Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID"/>
+<Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+<Property Name="CreatedAt" Type="Edm.DateTime" Nullable="false" Precision="0" sap:label="Time Stamp"/>
+<Property Name="FileName" Type="Edm.String" Nullable="false" MaxLength="256"/>
+<Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="256"/>
+<NavigationProperty Name="Format" Relationship="cds_zui_timesheet_26.to_format" FromRole="FromRole_to_format" ToRole="ToRole_to_format"/>
+<NavigationProperty Name="TableColumns" Relationship="cds_zui_timesheet_26.to_tablecolumns" FromRole="FromRole_to_tablecolumns" ToRole="ToRole_to_tablecolumns"/>
+<NavigationProperty Name="CoverPage" Relationship="cds_zui_timesheet_26.to_coverpage" FromRole="FromRole_to_coverpage" ToRole="ToRole_to_coverpage"/>
+<NavigationProperty Name="Signature" Relationship="cds_zui_timesheet_26.to_signature" FromRole="FromRole_to_signature" ToRole="ToRole_to_signature"/>
+<NavigationProperty Name="PDFStandard" Relationship="cds_zui_timesheet_26.to_pdfstandard" FromRole="FromRole_to_pdfstandard" ToRole="ToRole_to_pdfstandard"/>
+</EntityType>
+<EntityType Name="SAP__Format" sap:content-version="1">
+<Key>
+<PropertyRef Name="Id"/>
+</Key>
+<Property Name="FitToPage" Type="cds_zui_timesheet_26.SAP__FitToPage" Nullable="false"/>
+<Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FontSize" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Orientation" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="PaperSize" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="BorderSize" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="MarginSize" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="FontName" Type="Edm.String" Nullable="false" MaxLength="255" sap:label="Font Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityType Name="SAP__PDFStandard" sap:content-version="1">
+<Key>
+<PropertyRef Name="Id"/>
+</Key>
+<Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="UsePDFAConformance" Type="Edm.Boolean" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="DoEnableAccessibility" Type="Edm.Boolean" Nullable="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityType Name="SAP__TableColumns" sap:content-version="1">
+<Key>
+<PropertyRef Name="Id"/>
+<PropertyRef Name="Name"/>
+<PropertyRef Name="Header"/>
+</Key>
+<Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Header" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="HorizontalAlignment" Type="Edm.String" Nullable="false" MaxLength="10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityType Name="SAP__CoverPage" sap:content-version="1">
+<Key>
+<PropertyRef Name="Title"/>
+<PropertyRef Name="Id"/>
+<PropertyRef Name="Name"/>
+</Key>
+<Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Value" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityType Name="SAP__Signature" sap:content-version="1">
+<Key>
+<PropertyRef Name="Id"/>
+</Key>
+<Property Name="Id" Type="Edm.Guid" Nullable="false" sap:label="UUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="DoSign" Type="Edm.Boolean" Nullable="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="Reason" Type="Edm.String" Nullable="false" MaxLength="256" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<EntityType Name="SAP__ValueHelp" sap:content-version="1">
+<Key>
+<PropertyRef Name="VALUEHELP"/>
+</Key>
+<Property Name="VALUEHELP" Type="Edm.String" Nullable="false"/>
+<Property Name="FIELD_VALUE" Type="Edm.String" Nullable="false" MaxLength="10"/>
+<Property Name="DESCRIPTION" Type="Edm.String"/>
+</EntityType>
+<ComplexType Name="SAP__FitToPage">
+<Property Name="ErrorRecoveryBehavior" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Error behavior" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="IsEnabled" Type="Edm.Boolean" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="MinimumFontSize" Type="Edm.Int32" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</ComplexType>
+<Association Name="assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" sap:content-version="1">
+<End Type="cds_zui_timesheet_26.AttendanceHistoryType" Multiplicity="1" Role="FromRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
+<End Type="cds_zui_timesheet_26.MyDisputesType" Multiplicity="*" Role="ToRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
+</Association>
+<Association Name="assoc_55D14E3FB7A186D392737FE206EC711C" sap:content-version="1">
+<End Type="cds_zui_timesheet_26.EmpShiftType" Multiplicity="1" Role="FromRole_assoc_55D14E3FB7A186D392737FE206EC711C"/>
+<End Type="cds_zui_timesheet_26.ShiftLookupType" Multiplicity="0..1" Role="ToRole_assoc_55D14E3FB7A186D392737FE206EC711C"/>
+</Association>
+<Association Name="to_format" sap:content-version="1">
+<End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_format"/>
+<End Type="cds_zui_timesheet_26.SAP__Format" Multiplicity="1" Role="ToRole_to_format"/>
+<ReferentialConstraint>
+<Principal Role="FromRole_to_format">
+<PropertyRef Name="Id"/>
+</Principal>
+<Dependent Role="ToRole_to_format">
+<PropertyRef Name="Id"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="to_tablecolumns" sap:content-version="1">
+<End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_tablecolumns"/>
+<End Type="cds_zui_timesheet_26.SAP__TableColumns" Multiplicity="*" Role="ToRole_to_tablecolumns"/>
+<ReferentialConstraint>
+<Principal Role="FromRole_to_tablecolumns">
+<PropertyRef Name="Id"/>
+</Principal>
+<Dependent Role="ToRole_to_tablecolumns">
+<PropertyRef Name="Id"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="to_coverpage" sap:content-version="1">
+<End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_coverpage"/>
+<End Type="cds_zui_timesheet_26.SAP__CoverPage" Multiplicity="*" Role="ToRole_to_coverpage"/>
+<ReferentialConstraint>
+<Principal Role="FromRole_to_coverpage">
+<PropertyRef Name="Id"/>
+</Principal>
+<Dependent Role="ToRole_to_coverpage">
+<PropertyRef Name="Id"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="to_signature" sap:content-version="1">
+<End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_signature"/>
+<End Type="cds_zui_timesheet_26.SAP__Signature" Multiplicity="1" Role="ToRole_to_signature"/>
+<ReferentialConstraint>
+<Principal Role="FromRole_to_signature">
+<PropertyRef Name="Id"/>
+</Principal>
+<Dependent Role="ToRole_to_signature">
+<PropertyRef Name="Id"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="to_pdfstandard" sap:content-version="1">
+<End Type="cds_zui_timesheet_26.SAP__DocumentDescription" Multiplicity="1" Role="FromRole_to_pdfstandard"/>
+<End Type="cds_zui_timesheet_26.SAP__PDFStandard" Multiplicity="1" Role="ToRole_to_pdfstandard"/>
+<ReferentialConstraint>
+<Principal Role="FromRole_to_pdfstandard">
+<PropertyRef Name="Id"/>
+</Principal>
+<Dependent Role="ToRole_to_pdfstandard">
+<PropertyRef Name="Id"/>
+</Dependent>
+</ReferentialConstraint>
+</Association>
+<Association Name="assoc_722B62FBB5D153F19457A8A064D3C73C" sap:content-version="1">
+<End Type="cds_zui_timesheet_26.OtPlanType" Multiplicity="1" Role="FromRole_assoc_722B62FBB5D153F19457A8A064D3C73C"/>
+<End Type="cds_zui_timesheet_26.ShiftLookupType" Multiplicity="0..1" Role="ToRole_assoc_722B62FBB5D153F19457A8A064D3C73C"/>
+</Association>
+<EntityContainer Name="cds_zui_timesheet_26_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx pdf">
+<EntitySet Name="SAP__Currencies" EntityType="cds_zui_timesheet_26.SAP__Currency" sap:content-version="1"/>
+<EntitySet Name="SAP__UnitsOfMeasure" EntityType="cds_zui_timesheet_26.SAP__UnitOfMeasure" sap:content-version="1"/>
+<EntitySet Name="SAP__MyDocumentDescriptions" EntityType="cds_zui_timesheet_26.SAP__DocumentDescription" sap:content-version="1"/>
+<EntitySet Name="SAP__FormatSet" EntityType="cds_zui_timesheet_26.SAP__Format" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="SAP__PDFStandardSet" EntityType="cds_zui_timesheet_26.SAP__PDFStandard" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="SAP__TableColumnsSet" EntityType="cds_zui_timesheet_26.SAP__TableColumns" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="SAP__CoverPageSet" EntityType="cds_zui_timesheet_26.SAP__CoverPage" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="SAP__SignatureSet" EntityType="cds_zui_timesheet_26.SAP__Signature" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="SAP__ValueHelpSet" EntityType="cds_zui_timesheet_26.SAP__ValueHelp" sap:content-version="1"/>
+<EntitySet Name="WorkingTime" EntityType="cds_zui_timesheet_26.WorkingTimeType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="EmpShift" EntityType="cds_zui_timesheet_26.EmpShiftType" sap:content-version="1" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc"/>
+<EntitySet Name="Employee" EntityType="cds_zui_timesheet_26.EmployeeType" sap:content-version="1" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc"/>
+<EntitySet Name="Holiday" EntityType="cds_zui_timesheet_26.HolidayType" sap:content-version="1" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc"/>
+<EntitySet Name="HR_Dashboard" EntityType="cds_zui_timesheet_26.HR_DashboardType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="Schedule" EntityType="cds_zui_timesheet_26.ScheduleType" sap:content-version="1" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc"/>
+<EntitySet Name="ShiftLookup" EntityType="cds_zui_timesheet_26.ShiftLookupType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="MyDisputes" EntityType="cds_zui_timesheet_26.MyDisputesType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+<EntitySet Name="AttendanceHistory" EntityType="cds_zui_timesheet_26.AttendanceHistoryType" sap:creatable="false" sap:deletable="false" sap:content-version="1" sap:updatable-path="Update_mc"/>
+<EntitySet Name="OtPlan" EntityType="cds_zui_timesheet_26.OtPlanType" sap:content-version="1" sap:deletable-path="Delete_mc" sap:updatable-path="Update_mc"/>
+<AssociationSet Name="to_formatSet" Association="cds_zui_timesheet_26.to_format" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_format"/>
+<End EntitySet="SAP__FormatSet" Role="ToRole_to_format"/>
+</AssociationSet>
+<AssociationSet Name="to_pdfstandardSet" Association="cds_zui_timesheet_26.to_pdfstandard" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_pdfstandard"/>
+<End EntitySet="SAP__PDFStandardSet" Role="ToRole_to_pdfstandard"/>
+</AssociationSet>
+<AssociationSet Name="assoc_722B62FBB5D153F19457A8A064D3C73C" Association="cds_zui_timesheet_26.assoc_722B62FBB5D153F19457A8A064D3C73C" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="OtPlan" Role="FromRole_assoc_722B62FBB5D153F19457A8A064D3C73C"/>
+<End EntitySet="ShiftLookup" Role="ToRole_assoc_722B62FBB5D153F19457A8A064D3C73C"/>
+</AssociationSet>
+<AssociationSet Name="assoc_55D14E3FB7A186D392737FE206EC711C" Association="cds_zui_timesheet_26.assoc_55D14E3FB7A186D392737FE206EC711C" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="EmpShift" Role="FromRole_assoc_55D14E3FB7A186D392737FE206EC711C"/>
+<End EntitySet="ShiftLookup" Role="ToRole_assoc_55D14E3FB7A186D392737FE206EC711C"/>
+</AssociationSet>
+<AssociationSet Name="to_tablecolumnsSet" Association="cds_zui_timesheet_26.to_tablecolumns" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_tablecolumns"/>
+<End EntitySet="SAP__TableColumnsSet" Role="ToRole_to_tablecolumns"/>
+</AssociationSet>
+<AssociationSet Name="assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" Association="cds_zui_timesheet_26.assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="AttendanceHistory" Role="FromRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
+<End EntitySet="MyDisputes" Role="ToRole_assoc_42FF80C8B23BA7796F1AEBD7ACDCA5B9"/>
+</AssociationSet>
+<AssociationSet Name="to_signatureSet" Association="cds_zui_timesheet_26.to_signature" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_signature"/>
+<End EntitySet="SAP__SignatureSet" Role="ToRole_to_signature"/>
+</AssociationSet>
+<AssociationSet Name="to_coverpageSet" Association="cds_zui_timesheet_26.to_coverpage" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="SAP__MyDocumentDescriptions" Role="FromRole_to_coverpage"/>
+<End EntitySet="SAP__CoverPageSet" Role="ToRole_to_coverpage"/>
+</AssociationSet>
+<FunctionImport Name="createReport" ReturnType="cds_zui_timesheet_26.WorkingTimeType" EntitySet="WorkingTime" m:HttpMethod="POST" sap:action-for="cds_zui_timesheet_26.WorkingTimeType" sap:applicable-path="createReport_ac">
+<Parameter Name="Pernr" Type="Edm.String" Mode="In" MaxLength="8" sap:label="Personnel Number"/>
+<Parameter Name="WorkDate" Type="Edm.DateTime" Mode="In" Precision="0" sap:label="Date" sap:display-format="Date"/>
+<Parameter Name="ShiftId" Type="Edm.String" Mode="In" MaxLength="10" sap:label="Shift ID"/>
+<Parameter Name="request_type" Type="Edm.String" Mode="In" MaxLength="30" sap:value-list="fixed-values" sap:label="Request Type"/>
+<Parameter Name="proposed_in" Type="Edm.Time" Mode="In" Precision="0" sap:label="Proposed In"/>
+<Parameter Name="proposed_out" Type="Edm.Time" Mode="In" Precision="0" sap:label="Proposed Out"/>
+<Parameter Name="employee_comment" Type="Edm.String" Mode="In" MaxLength="255" sap:label="Employee Comment"/>
+</FunctionImport>
+<FunctionImport Name="cancelReport" ReturnType="cds_zui_timesheet_26.MyDisputesType" EntitySet="MyDisputes" m:HttpMethod="POST" sap:action-for="cds_zui_timesheet_26.MyDisputesType">
+<Parameter Name="DisputeId" Type="Edm.Guid" Mode="In" sap:label="UUID"/>
+</FunctionImport>
+</EntityContainer>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/createReport/request_type">
+<Annotation Term="Common.ValueListWithFixedValues"/>
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities">
+<Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/createReport/employee_comment">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/createReport/proposed_in">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/createReport/proposed_out">
+<Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/AttendanceHistory">
+<Annotation Term="Capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_MyDisputes"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+<Annotation Term="Capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/EmpShift">
+<Annotation Term="Capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record>
+<PropertyValue Property="RequiredProperties">
+<Collection>
+<PropertyPath>Pernr</PropertyPath>
+<PropertyPath>WorkDate</PropertyPath>
+<PropertyPath>ShiftId</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_Shift"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+<Annotation Term="Capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/Employee">
+<Annotation Term="Capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+<Annotation Term="Capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/Holiday">
+<Annotation Term="Capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record>
+<PropertyValue Property="RequiredProperties">
+<Collection>
+<PropertyPath>Plant</PropertyPath>
+<PropertyPath>HolDate</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+<Annotation Term="Capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/OtPlan">
+<Annotation Term="Capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.InsertRestrictions">
+<Record>
+<PropertyValue Property="RequiredProperties">
+<Collection>
+<PropertyPath>Pernr</PropertyPath>
+<PropertyPath>PlanDate</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="Capabilities.NavigationRestrictions">
+<Record>
+<PropertyValue Property="RestrictedProperties">
+<Collection>
+<Record>
+<PropertyValue Property="NavigationProperty" NavigationPropertyPath="to_Shift"/>
+<PropertyValue Property="InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</PropertyValue>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+<Annotation Term="Capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/Schedule">
+<Annotation Term="Capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+<Annotation Term="Capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>Delete_mc</PropertyPath>
+<PropertyPath>Update_mc</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/WorkingTime">
+<Annotation Term="Capabilities.FilterRestrictions">
+<Record>
+<PropertyValue Property="NonFilterableProperties">
+<Collection>
+<PropertyPath>createReport_ac</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+<Annotation Term="Capabilities.SortRestrictions">
+<Record>
+<PropertyValue Property="NonSortableProperties">
+<Collection>
+<PropertyPath>createReport_ac</PropertyPath>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.EmpShiftType/Pernr">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.EmpShiftType/ShiftId">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.EmpShiftType/WorkDate">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.EmployeeType/Pernr">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.HolidayType/HolDate">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.HolidayType/Plant">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.OtPlanType/Pernr">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.OtPlanType/PlanDate">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.ScheduleType/Plant">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.ScheduleType/ShiftId">
+<Annotation Term="SAP__core.Immutable"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities/MyDisputes">
+<Annotation Term="SAP__core.OptimisticConcurrency">
+<Collection/>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.cds_zui_timesheet_26_Entities">
+<Annotation Term="Org.OData.Capabilities.V1.BatchSupport">
+<Record Type="Org.OData.Capabilities.V1.BatchSupportType">
+<PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="true"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__CodeList.CurrencyCodes">
+<Record>
+<PropertyValue Property="Url" String="./$metadata"/>
+<PropertyValue Property="CollectionPath" String="SAP__Currencies"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__CodeList.UnitsOfMeasure">
+<Record>
+<PropertyValue Property="Url" String="./$metadata"/>
+<PropertyValue Property="CollectionPath" String="SAP__UnitsOfMeasure"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__PDF.Features">
+<Record>
+<PropertyValue Property="DocumentDescriptionReference" String="./$metadata"/>
+<PropertyValue Property="DocumentDescriptionCollection" String="SAP__MyDocumentDescriptions"/>
+<PropertyValue Property="ArchiveFormat" Bool="true"/>
+<PropertyValue Property="CoverPage" Bool="true"/>
+<PropertyValue Property="Signature" Bool="true"/>
+<PropertyValue Property="FitToPage" Bool="true"/>
+<PropertyValue Property="FontName" Bool="true"/>
+<PropertyValue Property="FontSize" Bool="true"/>
+<PropertyValue Property="Margin" Bool="true"/>
+<PropertyValue Property="Border" Bool="true"/>
+<PropertyValue Property="ResultSizeDefault" Int="20000"/>
+<PropertyValue Property="ResultSizeMaximum" Int="20000"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__CodeList.SAP__DocumentDescription">
+<Record>
+<PropertyValue Property="Url" String="./$metadata"/>
+<PropertyValue Property="CollectionPath" String="SAP__MyDocumentDescriptions"/>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__Currency/CurrencyCode">
+<Annotation Term="SAP__common.Text" Path="Text"/>
+<Annotation Term="SAP__common.UnitSpecificScale" Path="DecimalPlaces"/>
+<Annotation Term="SAP__CodeList.StandardCode" Path="ISOCode"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__UnitOfMeasure/UnitCode">
+<Annotation Term="SAP__common.Text" Path="Text"/>
+<Annotation Term="SAP__common.UnitSpecificScale" Path="DecimalPlaces"/>
+<Annotation Term="SAP__CodeList.StandardCode" Path="ISOCode"/>
+<Annotation Term="SAP__CodeList.ExternalCode" Path="ExternalCode"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__UnitOfMeasure">
+<Annotation Term="SAP__core.AlternateKeys">
+<Collection>
+<Record>
+<PropertyValue Property="Key">
+<Collection>
+<Record>
+<PropertyValue Property="Name" Path="ExternalCode"/>
+<PropertyValue Property="Alias" String="ExternalCode"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Collection>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__DocumentDescription/CreatedBy">
+<Annotation Term="SAP__core.Computed"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__DocumentDescription/CreatedAt">
+<Annotation Term="SAP__core.Computed"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__DocumentDescription">
+<Annotation Term="SAP__capabilties.InsertRestrictions">
+<Record>
+<PropertyValue Property="Insertable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilties.UpdateRestrictions">
+<Record>
+<PropertyValue Property="Updatable" Bool="false"/>
+<PropertyValue Property="QueryOptions">
+<Record>
+<PropertyValue Property="SelectSupported" Bool="true"/>
+</Record>
+</PropertyValue>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilties.DeleteRestrictions">
+<Record>
+<PropertyValue Property="Deletable" Bool="false"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__capabilties.FilterRestrictions">
+<Record>
+<PropertyValue Property="FilterExpressionRestrictions">
+<Collection>
+<Record>
+<PropertyValue Property="Property" PropertyPath="Format/Orientation"/>
+<PropertyValue Property="AllowedExpressions" String="Multivalue"/>
+</Record>
+<Record>
+<PropertyValue Property="Property" PropertyPath="Format/PaperSize"/>
+<PropertyValue Property="AllowedExpressions" String="Multivalue"/>
+</Record>
+</Collection>
+</PropertyValue>
+</Record>
+</Annotation>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__Format/FitToPage/ErrorRecoveryBehavior">
+<Annotation Term="SAP__common.ValueListReferences">
+<Record>
+<PropertyValue Property="Url" String="./$metadata"/>
+<PropertyValue Property="CollectionPath" String="../../../../SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27ErrorRecoveryBehaviour%27"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__common.ValueListWithFixedValues"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__Format/FontName">
+<Annotation Term="SAP__common.ValueListReferences">
+<Record>
+<PropertyValue Property="Url" String="./$metadata"/>
+<PropertyValue Property="CollectionPath" String="SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27FontName%27"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__common.ValueListWithFixedValues"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__Format/PaperSize">
+<Annotation Term="SAP__common.ValueListReferences">
+<Record>
+<PropertyValue Property="Url" String="./$metadata"/>
+<PropertyValue Property="CollectionPath" String="SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27PaperSize%27"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__common.ValueListWithFixedValues"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__Format/Orientation">
+<Annotation Term="SAP__common.ValueListReferences">
+<Record>
+<PropertyValue Property="Url" String="./$metadata"/>
+<PropertyValue Property="CollectionPath" String="SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27FontName%27"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__common.ValueListWithFixedValues"/>
+</Annotations>
+<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="cds_zui_timesheet_26.SAP__TableColumns/HorizontalAlignment">
+<Annotation Term="SAP__common.ValueListReferences">
+<Record>
+<PropertyValue Property="Url" String="./$metadata"/>
+<PropertyValue Property="CollectionPath" String="SAP__ValueHelpSet?$filter=VALUEHELP%20eq%20%27HorizontalAlignment%27"/>
+</Record>
+</Annotation>
+<Annotation Term="SAP__common.ValueListWithFixedValues"/>
+</Annotations>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/sap/ZSB_TIMESHEET_26_V2/$metadata"/>
+<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="https://s40lp1.ucc.cit.tum.de/sap/opu/odata/sap/ZSB_TIMESHEET_26_V2/$metadata"/>
+</Schema>
+</edmx:DataServices>
 </edmx:Edmx>
