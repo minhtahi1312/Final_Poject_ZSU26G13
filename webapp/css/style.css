@@ -1,25 +1,31 @@
-.sapMPlanCalRow{
-    min-height:90px;
+/* Planning Calendar */
+
+.sapMPlanCal {
+
+    border-radius: 10px;
+
 }
 
-.sapMPlanCalRowHead{
-    width:220px;
+/* chiều cao row */
+
+.sapMPlanCalRow {
+
+    min-height: 72px;
+
 }
 
-.sapUiCalendarApp{
-    border-radius:4px;
-    min-height:45px;
+/* Appointment */
+
+.sapUiCalendarApp {
+
+    border-radius: 6px;
+
 }
 
-.sapUiCalendarAppTitle{
-    font-size:15px;
-    font-weight:600;
-}
+/* khoảng cách */
 
-.sapUiCalendarAppText{
-    font-size:12px;
-}
+.sapUiCalendarAppCont {
 
-.sapUiCalendarRowAppsSubInt{
-    border-right:1px solid #d9d9d9;
+    padding: 4px;
+
 }

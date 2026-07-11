@@ -2,7 +2,7 @@
     controllerName="my.report.zmydisputes.controller.EmployeeTimesheet"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page id="timesheetPage" title="Lịch Sử Chấm Công Của Tôi" showHeader="true">
+    <Page id="timesheetPage" title="Lịch sử chấm công của tôi" showHeader="true">
         <content>
             <Table id="timesheetTable" 
                    items="{path: '/WorkingTime', parameters: {mode: 'OneWay'}}"

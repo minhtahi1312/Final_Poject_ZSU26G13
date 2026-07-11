@@ -2,7 +2,7 @@
     controllerName="my.report.zmydisputes.controller.EmployeeDisputes"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <Page id="disputesPage" title="Lịch Sử Chấm Công Của Tôi" showHeader="true">
+    <Page id="disputesPage" title=" Đơn Khiếu Nại " showHeader="true">
         <content>
             <Table id="disputesTable" 
                    items="{/MyDisputes}"
@@ -61,12 +61,16 @@
                       text="{RequestType}"/>
 
                 <Text id="txtIn"
-                      text="{path:'ProposedIn',
-                      type:'sap.ui.model.type.Time'}"/>
+      text="{
+          path:'ProposedIn',
+          formatter: '.formatEdmTime'
+      }"/>
 
-                <Text id="txtOut"
-                      text="{path:'ProposedOut',
-                      type:'sap.ui.model.type.Time'}"/>
+<Text id="txtOut"
+      text="{
+          path:'ProposedOut',
+          formatter: '.formatEdmTime'
+      }"/>
 
                 <Text id="txtReason"
                       text="{EmployeeComment}"/>
