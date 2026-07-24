@@ -13,7 +13,24 @@ sap.ui.define(
       "my.report.zmydisputes.controller.EmployeeTimesheet",
       {
         onInit: function () {
-          // Khởi tạo tự động nhận OData Model mặc định từ manifest
+          this.getOwnerComponent()
+            .getRouter()
+            .getRoute("EmployeeTimesheet")
+            .attachPatternMatched(this._onRouteMatched, this);
+        },
+
+        _onRouteMatched: function () {
+          var oTable = this.byId("timesheetTable");
+
+          if (!oTable) {
+            return;
+          }
+
+          var oBinding = oTable.getBinding("items");
+
+          if (oBinding) {
+            oBinding.refresh(true);
+          }
         },
 
         formatEdmTime: function (oTime) {
@@ -91,9 +108,9 @@ sap.ui.define(
           var oContext = oSelectedItem.getBindingContext();
 
           // --- LẤY ĐỘNG TOÀN BỘ GIÁ TRỊ TỪ ROW ĐƯỢC CHỌN ---
-          var sPernr = oContext.getProperty("Pernr"); // Lấy động Mã nhân viên từ dòng được tích
-          var oDate = oContext.getProperty("WorkDate"); // Lấy động Ngày làm việc từ dòng được tích
-          var sShiftId = oContext.getProperty("ShiftId"); // Lấy động Mã ca làm việc từ dòng được tích
+          var sPernr = oContext.getProperty("Pernr");
+          var oDate = oContext.getProperty("WorkDate");
+          var sShiftId = oContext.getProperty("ShiftId");
 
           // Kiểm tra phòng hờ nếu dữ liệu dòng chọn bị thiếu trường bắt buộc
           if (!sPernr || !oDate || !sShiftId) {
@@ -147,7 +164,12 @@ sap.ui.define(
               oView.byId("tpProposedIn").setValue("");
               oView.byId("tpProposedOut").setValue("");
               oView.byId("inputReason").setValue("");
-              oModel.refresh(true);
+              var oTable = this.byId("timesheetTable");
+              var oBinding = oTable.getBinding("items");
+
+              if (oBinding) {
+                oBinding.refresh(true);
+              }
             }.bind(this),
 
             error: function (oError) {

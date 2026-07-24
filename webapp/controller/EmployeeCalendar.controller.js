@@ -34,19 +34,16 @@ sap.ui.define(
             currentDate: this._getStartOfWeek(new Date()),
           });
           this.getView().setModel(oCustomModel, "$custom");
-
-          // KÍCH HOẠT LUỒNG ÉP CHẠY: Lắng nghe sự kiện Router mỗi khi nhảy vào trang Lịch
           var oRouter = this.getOwnerComponent().getRouter();
           oRouter
             .getRoute("EmployeeCalendar")
             .attachPatternMatched(this._onRouteMatched, this);
         },
 
-        /**
+        /*
          * Hàm tự động chạy khi Route "EmployeeCalendar" được khớp
          */
         _onRouteMatched: function () {
-          // Ép hệ thống kích hoạt lệnh gọi OData gửi xuống Network
           this._loadCalendarData();
         },
 
@@ -55,15 +52,10 @@ sap.ui.define(
          */
         _getStartOfWeek: function (oDate) {
           var d = new Date(oDate);
-
           var day = d.getDay();
-
           var diff = day === 0 ? -6 : 1 - day;
-
           d.setDate(d.getDate() + diff);
-
           d.setHours(0, 0, 0, 0);
-
           return d;
         },
 
@@ -81,69 +73,54 @@ sap.ui.define(
 
         onPreviousWeek: function () {
           var oCalendar = this.byId("planningCalendar");
-
           var oModel = this.getView().getModel("$custom");
-
           var d = new Date(oModel.getProperty("/currentDate"));
 
           d.setDate(d.getDate() - 7);
-
           oModel.setProperty("/currentDate", d);
-
           oCalendar.setStartDate(d);
         },
 
         onNextWeek: function () {
           var oCalendar = this.byId("planningCalendar");
-
           var oModel = this.getView().getModel("$custom");
-
           var d = new Date(oModel.getProperty("/currentDate"));
-
           d.setDate(d.getDate() + 7);
-
           oModel.setProperty("/currentDate", d);
-
           oCalendar.setStartDate(d);
         },
+
         _loadCalendarData: function () {
           var oView = this.getView();
-          var oModel = oView.getModel(); // Đọc OData Model mặc định từ manifest
-
+          var oModel = oView.getModel();
           if (!oModel) {
             return;
           }
-
           BusyIndicator.show(0);
           var that = this;
 
-          // Gọi tập thực thể OtPlan (Đúng theo file Metadata bạn cung cấp)
           oModel.read("/MySchedule", {
             success: function (oData) {
               BusyIndicator.hide();
               var aResults = oData.results;
               var oGroupedData = {};
-
               aResults.forEach(function (item) {
                 var sPernr = item.Pernr;
-
                 if (!item.PlanDate) {
                   return;
                 }
-
                 // Xử lý múi giờ đồng bộ tránh lệch ngày hiển thị
                 var dRawDate = new Date(item.PlanDate);
                 var dPlanDate = new Date(
                   dRawDate.getTime() + dRawDate.getTimezoneOffset() * 60000,
                 );
 
-                // --- THAY ĐỔI TẠI ĐÂY: KHỞI TẠO GIỜ ĐỘNG THEO CẤU HÌNH SAP BẢNG ZTA_SCHEDULE ---
                 var iStartHour = 0,
                   iStartMin = 0,
                   iEndHour = 0,
                   iEndMin = 0;
                 var sShiftName = "Ca làm việc: " + item.ShiftId;
-                var sColorType = "Type10"; // Màu xám mặc định cho ca lạ
+                var sColorType = "Type10";
                 var iNextDayOffset = 0;
 
                 // 1. Bóc tách Giờ vào (ShiftTimeIn) từ Edm.Time (ms) của SAP OData
@@ -162,19 +139,21 @@ sap.ui.define(
                 if (item.IsOt) {
                   sShiftName += " (OT " + item.OtHours + "h)";
                 }
-                // 3. Tự động ánh xạ Tên và Màu sắc theo Mã ca bạn thiết lập
+
                 sShiftName = item.ShiftId;
                 // Gán mốc thời gian động bốc từ SAP Database
-                var dStartDate = new Date(dPlanDate);
-                dStartDate.setHours(0, 30, 0, 0);
+                var dRealStart = new Date(dPlanDate);
+                dRealStart.setHours(iStartHour, iStartMin, 0, 0);
 
-                var dEndDate = new Date(dPlanDate);
+                var dRealEnd = new Date(dPlanDate);
+                dRealEnd.setHours(iEndHour, iEndMin, 0, 0);
 
-                if (iNextDayOffset === 1) {
-                  dEndDate.setDate(dEndDate.getDate() + 1);
-                }
+                // Giờ dùng để vẽ Calendar
+                var dDisplayStart = new Date(dPlanDate);
+                dDisplayStart.setHours(0, 30, 0, 0);
 
-                dEndDate.setHours(22, 30, 0, 0);
+                var dDisplayEnd = new Date(dPlanDate);
+                dDisplayEnd.setHours(22, 30, 0, 0);
 
                 var oAppointment = {
                   ShiftId: item.ShiftId,
@@ -194,18 +173,18 @@ sap.ui.define(
 
                   ColorType: sColorType,
 
-                  StartDate: dStartDate,
+                  // dùng để HIỂN THỊ trên lịch
+                  StartDate: dDisplayStart,
+                  EndDate: dDisplayEnd,
 
-                  EndDate: dEndDate,
+                  // giờ THẬT
+                  RealStartDate: dRealStart,
+                  RealEndDate: dRealEnd,
 
                   IsOt: item.IsOt,
-
                   OtHours: item.OtHours,
-
                   Pernr: item.Pernr,
-
                   EmployeeName: item.EmployeeName,
-
                   DeptId: item.DeptId,
                 };
 
@@ -256,8 +235,11 @@ sap.ui.define(
             return;
           }
 
-          var dStart = oAppointment.getStartDate();
-          var dEnd = oAppointment.getEndDate();
+          var oContext = oAppointment.getBindingContext("calendarModel");
+          var oAppt = oContext.getObject();
+
+          var dStart = oAppt.RealStartDate;
+          var dEnd = oAppt.RealEndDate;
 
           var sLogDate =
             dStart.getDate().toString().padStart(2, "0") +
@@ -274,10 +256,9 @@ sap.ui.define(
             ":" +
             dEnd.getMinutes().toString().padStart(2, "0");
 
-          
           var oModel = this.getView().getModel("calendarModel");
 
-          // ĐỌC THÔNG TIN ĐỘNG: Lấy ShiftName trực tiếp từ Object dữ liệu gốc đã gán thay vì text tĩnh
+          // Lấy ShiftName trực tiếp từ Object dữ liệu gốc đã gán thay vì text tĩnh
           var oAppointmentContext =
             oAppointment.getBindingContext("calendarModel");
           var sDynamicShiftName = oModel.getProperty(
@@ -407,14 +388,12 @@ sap.ui.define(
 
           var oDialog = new Dialog({
             title: "Đơn xin nghỉ phép",
-            contentWidth: "450px", // Thu nhỏ lại một chút nhìn sẽ gọn và đẹp hơn
+            contentWidth: "450px",
             stretchOnPhone: true,
             content: [
               new VBox({
                 width: "100%",
                 items: [
-                  // Dùng thuộc tính design="Bold" để làm nổi bật tiêu đề dòng
-                  // Dùng class "sapUiSmallMarginBottom" có sẵn của SAP để tự tạo khoảng cách đẹp
                   new Label({ text: "Nhân viên", design: "Bold" }),
                   new Text({
                     text: oAppt.EmployeeName + " (" + oAppt.Pernr + ")",
@@ -463,7 +442,6 @@ sap.ui.define(
             },
           });
 
-          // Thêm khoảng đệm bên trong hộp thoại (Class mặc định cực kỳ an toàn của SAPUI5)
           oDialog.addStyleClass("sapUiContentPadding");
           oDialog.open();
         },
@@ -484,7 +462,16 @@ sap.ui.define(
             },
 
             error: function (oError) {
-              MessageBox.error("Không thể gửi đơn.");
+              BusyIndicator.hide();
+
+              var sMessage = "Không thể gửi đơn.";
+
+              try {
+                var oResponse = JSON.parse(oError.responseText);
+                sMessage = oResponse.error.message.value;
+              } catch (e) {}
+
+              MessageBox.error(sMessage);
             },
           });
         },

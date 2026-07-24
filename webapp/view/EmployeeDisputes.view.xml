@@ -7,7 +7,10 @@
             <Table id="disputesTable" 
                    items="{/MyDisputes}"
                    mode="SingleSelectLeft"
-                   growing="true">
+                   growing="true"
+                   growingThreshold="10"
+    growingScrollToLoad="false"
+    growingTriggerText="Trang tiếp">
                 <headerToolbar>
                     <OverflowToolbar id="disputeHeader">
                         <Title id="disputeTitle" text="Dữ liệu quét thẻ thực tế" level="H2"/>
@@ -45,6 +48,15 @@
         <Column id="colStatus">
             <Text id="txtStatus" text="Trạng thái"/>
         </Column>
+        <Column
+    id="colApproverComment"
+    width="15rem">
+
+    <Text
+        id="txtApproverCommentHeader"
+        text="Ý kiến người duyệt"/>
+
+</Column>
 
     </columns>
 
@@ -77,7 +89,10 @@
 
                 <ObjectStatus id="objStatus"
                               text="{DisputeStatus}"/>
-
+                <Text id="txtApproverComment"
+      text="{ApproverComment}"
+      wrapping="true"
+      maxLines="2"/>
             </cells>
         </ColumnListItem>
     </items>

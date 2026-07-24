@@ -11,10 +11,27 @@ sap.ui.define(
       "my.report.zmydisputes.controller.EmployeeDisputes",
       {
         onInit: function () {
-          // Khởi tạo OData Model tự động nhận từ manifest
+          this.getOwnerComponent()
+            .getRouter()
+            .getRoute("EmployeeDisputes")
+            .attachPatternMatched(this._onRouteMatched, this);
         },
-        formatEdmTime: function (oTime) {
 
+        _onRouteMatched: function () {
+          var oTable = this.byId("disputesTable");
+
+          if (!oTable) {
+            return;
+          }
+
+          var oBinding = oTable.getBinding("items");
+
+          if (oBinding) {
+            oBinding.refresh(true);
+          }
+        },
+
+        formatEdmTime: function (oTime) {
           if (!oTime || oTime.ms === undefined) {
             return "";
           }
@@ -36,6 +53,7 @@ sap.ui.define(
         /**
          * Hàm xử lý Hủy đơn khiếu nại         */
         onCancelDispute: function (oEvent) {
+          var that = this;
           var oModel = this.getView().getModel();
           var oTable = this.byId("disputesTable");
           var oSelectedItem = oTable.getSelectedItem();
@@ -80,21 +98,28 @@ sap.ui.define(
           }
 
           // Bật màn hình chờ loading
-          BusyIndicator.show(0);
-
-          // Gọi Function Import xuống Backend
           oModel.callFunction("/cancelReport", {
             method: "POST",
             urlParameters: {
               DisputeId: sDisputeId,
             },
+
             success: function () {
               BusyIndicator.hide();
+
               MessageToast.show("Hủy đơn thành công!");
-              oModel.refresh(true);
+
+              var oTable = that.byId("disputesTable");
+              var oBinding = oTable.getBinding("items");
+
+              if (oBinding) {
+                oBinding.refresh(true);
+              }
             },
-            error: function (oError) {
+
+            error: function () {
               BusyIndicator.hide();
+
               MessageToast.show("Có lỗi xảy ra khi hủy đơn!");
             },
           });

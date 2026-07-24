@@ -8,7 +8,9 @@
                    items="{path: '/WorkingTime', parameters: {mode: 'OneWay'}}"
                    mode="SingleSelectLeft"
                    growing="true"
-                   growingThreshold="20">
+                   growingThreshold="10"
+                   growingScrollToLoad="false"
+                   growingTriggerText="Trang tiếp">
                 <headerToolbar>
                     <OverflowToolbar id="tableHeader">
                         <Title id="tableTitle" text="Dữ liệu quẹt thẻ thực tế" level="H2"/>

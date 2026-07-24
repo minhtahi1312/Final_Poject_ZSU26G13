@@ -24,7 +24,6 @@ sap.ui.define([
             } else if (sKey === "myTimesheet") {
                 this.oRouter.navTo("EmployeeTimesheet");
             } else if (sKey === "myDisputes") { 
-                // BỔ SUNG: Nhánh điều hướng quan trọng nhất để mở màn hình Đơn Khiếu Nại
                 this.oRouter.navTo("EmployeeDisputes");
             }
         }
