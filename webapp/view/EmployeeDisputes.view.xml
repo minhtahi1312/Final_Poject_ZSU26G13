@@ -41,7 +41,7 @@
             <Text id="txtProposedOut" text="Giờ ra đề xuất"/>
         </Column>
 
-        <Column id="colComment">
+        <Column id="colComment" width="15rem">
             <Text id="txtComment" text="Lý do"/>
         </Column>
 
@@ -85,14 +85,18 @@
       }"/>
 
                 <Text id="txtReason"
-                      text="{EmployeeComment}"/>
+      text="{EmployeeComment}"
+      wrapping="true"
+      renderWhitespace="true"
+      class="sapUiSelectable forceWordBreak" />
 
                 <ObjectStatus id="objStatus"
                               text="{DisputeStatus}"/>
                 <Text id="txtApproverComment"
       text="{ApproverComment}"
       wrapping="true"
-      maxLines="2"/>
+      renderWhitespace="true"
+      class="sapUiSelectable forceWordBreak" />
             </cells>
         </ColumnListItem>
     </items>

@@ -447,10 +447,11 @@ sap.ui.define(
         },
         _submitLeaveRequest: function (oAppt, sReason) {
           var oModel = this.getView().getModel();
-
+          var dWorkDate = new Date(oAppt.StartDate);
+          dWorkDate.setHours(12, 0, 0, 0);
           var oEntry = {
             PersonnelNumber: oAppt.Pernr,
-            WorkDate: oAppt.StartDate,
+            WorkDate: dWorkDate,
             RequestType: "LEAVE",
             EmployeeComment: sReason,
             DisputeStatus: "PENDING",
