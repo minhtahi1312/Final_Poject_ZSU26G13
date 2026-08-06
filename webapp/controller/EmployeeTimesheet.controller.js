@@ -34,8 +34,13 @@ sap.ui.define(
         },
 
         formatEdmTime: function (oTime) {
-          if (!oTime || oTime.ms === undefined) {
-            return "";
+          if (
+            !oTime ||
+            typeof oTime !== "object" ||
+            oTime.ms === undefined ||
+            oTime.ms === null
+          ) {
+            return "--:--:--"; // Hoặc trả về ""
           }
           // Tính toán chuyển đổi mili-giây thành giờ:phút:giây
           var iTotalSeconds = Math.floor(oTime.ms / 1000);
@@ -50,7 +55,13 @@ sap.ui.define(
 
           return sHours + ":" + sMinutes + ":" + sSeconds;
         },
+        onRequestTypeChange: function (oEvent) {
+          var sKey = oEvent.getSource().getSelectedKey();
 
+          var bVisible = sKey === "OVERTIME";
+
+          this.byId("vbOTSection").setVisible(bVisible);
+        },
         /**
          * 1. HÀM MỞ POPUP KHHIẾU NẠI (FRAGMENT)
          */
@@ -96,10 +107,16 @@ sap.ui.define(
           var sRequestType = oView.byId("selectRequestType").getSelectedKey();
           var sProposedIn = oView.byId("tpProposedIn").getValue();
           var sProposedOut = oView.byId("tpProposedOut").getValue();
+          var fOTHours = parseFloat(oView.byId("inputOTHours").getValue()) || 0;
+          console.log("OT =", fOTHours);
           var sEmployeeComment = oView.byId("inputReason").getValue();
 
           if (!sProposedIn || !sProposedOut || !sEmployeeComment) {
             MessageBox.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
+            return;
+          }
+          if (sRequestType === "OVERTIME" && fOTHours <= 0) {
+            MessageBox.warning("Vui lòng nhập số giờ OT.");
             return;
           }
 
@@ -154,6 +171,7 @@ sap.ui.define(
               request_type: sRequestType,
               proposed_in: formatTimeForODataV2(sProposedIn),
               proposed_out: formatTimeForODataV2(sProposedOut),
+              ot_hours: sRequestType === "OVERTIME" ? fOTHours : 0,
               employee_comment: sEmployeeComment,
             },
             success: function (oData, response) {
@@ -163,6 +181,7 @@ sap.ui.define(
 
               oView.byId("tpProposedIn").setValue("");
               oView.byId("tpProposedOut").setValue("");
+              oView.byId("inputOTHours").setValue("");
               oView.byId("inputReason").setValue("");
               var oTable = this.byId("timesheetTable");
               var oBinding = oTable.getBinding("items");

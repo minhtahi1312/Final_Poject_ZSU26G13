@@ -3,7 +3,7 @@
         <content>
             <VBox id="vboxContainer" class="sapUiSmallMargin">
                 <Label id="lblRequestType" text="Request Type" required="true" class="sapUiSmallMarginTop" />
-                <Select id="selectRequestType" width="100%" items="{/ZI_REQ_TYPE_VH_26}">
+                <Select id="selectRequestType" width="100%" change=".onRequestTypeChange" items="{/ZI_REQ_TYPE_VH_26}">
     <core:Item id="itemReqType" key="{RequestType}" text="{RequestTypeText}" />
 </Select>
 
@@ -12,7 +12,16 @@
 
                 <Label id="lblProposedOut" text="Proposed Out Time" required="true" class="sapUiSmallMarginTop" />
                 <TimePicker id="tpProposedOut" width="100%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="Select Out Time" />
+                <VBox id="vbOTSection" visible="false">
+                 <Label id="lblOTHours"
+                       text="OT Hours"
+                       class="sapUiSmallMarginTop"/>
 
+                <Input id="inputOTHours"
+                       width="100%"
+                       type="Number"
+                       placeholder="Example: 2.5"/>
+</VBox>
                 <Label id="lblReason" text="Employee Comment" required="true" class="sapUiSmallMarginTop" />
                 <TextArea id="inputReason" width="100%" rows="4" placeholder="Enter your reason here..." />
             </VBox>
