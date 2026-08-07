@@ -8,7 +8,7 @@
         <tnt:header>
             <tnt:ToolHeader id="appHeader">
                 <Button id="navButton" icon="sap-icon://menu2" type="Transparent" press="onSideNavButtonPress"/>
-                <Title id="appTitle" text="Cổng Thông Tin Nhân Viên (ESS Portal)" />
+                <Title id="appTitle" text="Employee Self-Service Portal (ESS)" />
                 <ToolbarSpacer id="headerSpacer" />
                 <tnt:ToolHeaderUtilitySeparator id="headerSeparator" />
                 <Avatar id="userAvatar" src="sap-icon://employee" displaySize="XS"/>
@@ -18,9 +18,9 @@
         <tnt:sideContent>
             <tnt:SideNavigation id="sideNavigation" selectedKey="myCalendar" itemSelect="onSideItemSelect">
                 <tnt:NavigationList id="navigationList">
-                    <tnt:NavigationListItem id="menuCalendar" text="Lịch Làm Việc Của Tôi" icon="sap-icon://calendar" key="myCalendar" />
-                    <tnt:NavigationListItem id="menuTimesheet" text="Lịch Sử Chấm Công" icon="sap-icon://customer-history" key="myTimesheet" />
-                    <tnt:NavigationListItem id="menuDisputes" text="Đơn Khiếu Nại (Disputes)" icon="sap-icon://alert" key="myDisputes" />
+                    <tnt:NavigationListItem id="menuCalendar" text="My Work Schedule" icon="sap-icon://calendar" key="myCalendar" />
+                    <tnt:NavigationListItem id="menuTimesheet" text="Timesheet History" icon="sap-icon://customer-history" key="myTimesheet" />
+                    <tnt:NavigationListItem id="menuDisputes" text="Dispute Requests" icon="sap-icon://alert" key="myDisputes" />
                 </tnt:NavigationList>
             </tnt:SideNavigation>
         </tnt:sideContent>

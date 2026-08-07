@@ -5,8 +5,24 @@ sap.ui.define(
     "sap/m/MessageToast",
     "sap/m/MessageBox",
     "sap/ui/core/BusyIndicator",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/m/SelectDialog",
+    "sap/m/StandardListItem",
+    "sap/ui/model/json/JSONModel",
   ],
-  function (Controller, Fragment, MessageToast, MessageBox, BusyIndicator) {
+  function (
+    Controller,
+    Fragment,
+    MessageToast,
+    MessageBox,
+    BusyIndicator,
+    Filter,
+    FilterOperator,
+    SelectDialog,
+    StandardListItem,
+    JSONModel,
+  ) {
     "use strict";
 
     return Controller.extend(
@@ -30,6 +46,140 @@ sap.ui.define(
 
           if (oBinding) {
             oBinding.refresh(true);
+          }
+        },
+        onStatusValueHelp: function () {
+          var oInput = this.byId("idStatusFilter");
+          var oModel = this.getView().getModel();
+
+          BusyIndicator.show(0);
+
+          // Get danh sách Status thực tế từ Entity WorkingTime
+          oModel.read("/WorkingTime", {
+            success: function (oData) {
+              BusyIndicator.hide();
+
+              var aResults = oData.results || [];
+              var aUniqueStatus = [];
+              var mStatusMap = {};
+
+              // Lựa chọn mặc định reset/tất cả
+              aUniqueStatus.push({
+                Key: "",
+                Title: "Tất cả trạng thái",
+                Description: "Hiển thị toàn bộ",
+              });
+
+              // Bóc tách danh sách Status duy nhất từ Backend
+              aResults.forEach(function (item) {
+                if (item.status && !mStatusMap[item.status]) {
+                  mStatusMap[item.status] = true;
+                  aUniqueStatus.push({
+                    Key: item.status,
+                    Title: item.status,
+                    Description: "Trạng thái: " + item.status,
+                  });
+                }
+              });
+
+              // Tạo SelectDialog Value Help
+              var oValueHelpDialog = new SelectDialog({
+                title: "Chọn Trạng thái",
+                items: {
+                  path: "/",
+                  template: new StandardListItem({
+                    title: "{Title}",
+                    description: "{Description}",
+                    type: "Active",
+                  }),
+                },
+                search: function (oEvent) {
+                  var sValue = oEvent.getParameter("value");
+                  var oFilter = new Filter(
+                    "Title",
+                    FilterOperator.Contains,
+                    sValue,
+                  );
+                  oEvent.getSource().getBinding("items").filter([oFilter]);
+                },
+                confirm: function (oEvent) {
+                  var oSelectedItem = oEvent.getParameter("selectedItem");
+                  if (oSelectedItem) {
+                    var oContext = oSelectedItem.getBindingContext();
+                    var sKey = oContext.getProperty("Key");
+
+                    oInput.setValue(oSelectedItem.getTitle());
+                    oInput.data("selectedKey", sKey);
+                  }
+                },
+              });
+
+              oValueHelpDialog.setModel(new JSONModel(aUniqueStatus));
+              oValueHelpDialog.open();
+            },
+            error: function () {
+              BusyIndicator.hide();
+              MessageBox.error("Không thể tải danh sách trạng thái.");
+            },
+          });
+        },
+
+        /**
+         * 2. HÀM XỬ LÝ LỌC DỮ LIỆU KHI NHẤN "GO / SEARCH" TRÊN FILTERBAR
+         */
+        onSearch: function () {
+          var aFilters = [];
+
+          // A. Lọc theo Ngày làm việc
+          var oDatePicker = this.byId("idWorkDateFilter");
+          var dDate = oDatePicker.getDateValue();
+
+          if (dDate) {
+            var dFilterDate = new Date(
+              Date.UTC(
+                dDate.getFullYear(),
+                dDate.getMonth(),
+                dDate.getDate(),
+                12,
+                0,
+                0,
+              ),
+            );
+            aFilters.push(
+              new Filter("WorkDate", FilterOperator.EQ, dFilterDate),
+            );
+          }
+
+          // B. Lọc theo Trạng thái chọn từ Value Help
+          var oStatusInput = this.byId("idStatusFilter");
+          var sStatusKey = oStatusInput.data("selectedKey");
+
+          if (sStatusKey) {
+            aFilters.push(new Filter("status", FilterOperator.EQ, sStatusKey));
+          }
+
+          // Áp dụng bộ lọc vào Table Binding
+          var oTable = this.byId("timesheetTable");
+          var oBinding = oTable.getBinding("items");
+          if (oBinding) {
+            oBinding.filter(aFilters);
+          }
+        },
+
+        /**
+         * 3. HÀM RESET BỘ LỌC SEARCH HELP
+         */
+        onReset: function () {
+          this.byId("idWorkDateFilter").setDateValue(null);
+
+          var oStatusInput = this.byId("idStatusFilter");
+          oStatusInput.setValue("");
+          oStatusInput.data("selectedKey", "");
+
+          var oTable = this.byId("timesheetTable");
+          var oBinding = oTable.getBinding("items");
+          if (oBinding) {
+            oBinding.filter([]);
           }
         },
 

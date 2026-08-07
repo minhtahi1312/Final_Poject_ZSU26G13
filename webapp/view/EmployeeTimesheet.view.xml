@@ -1,52 +1,96 @@
 <mvc:View
     controllerName="my.report.zmydisputes.controller.EmployeeTimesheet"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="timesheetPage" title="Lịch sử chấm công của tôi" showHeader="true">
+    xmlns="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar">
+    <Page id="timesheetPage" title="My Timesheet History" showHeader="true">
         <content>
-            <Table id="timesheetTable" 
-                   items="{path: '/WorkingTime', parameters: {mode: 'OneWay'}}"
-                   mode="SingleSelectLeft"
-                   growing="true"
-                   growingThreshold="10"
-                   growingScrollToLoad="false"
-                   growingTriggerText="Trang tiếp">
-                <headerToolbar>
-                    <OverflowToolbar id="tableHeader">
-                        <Title id="tableTitle" text="Dữ liệu quẹt thẻ thực tế" level="H2"/>
-                        <ToolbarSpacer id="timesheetSpacer"/>
-                        <Button id="btnSubmitReport" 
-                                text="Gửi đơn giải trình" 
-                                type="Emphasized" 
-                                icon="sap-icon://request" 
-                                press="onPressSubmitDispute"/>
-                    </OverflowToolbar>
-                </headerToolbar>
-                <columns>
-    <Column id="tsColDate"><Text id="tsLblDate" text="Ngày làm việc" /></Column>
-    <Column id="tsColShift"><Text id="tsLblShift" text="Mã ca" /></Column>
-    <Column id="tsColIn"><Text id="tsLblIn" text="Giờ vào " /></Column>
-    <Column id="tsColOut"><Text id="tsLblOut" text="Giờ ra " /></Column>
-    <Column id="tsColTotHours"><Text id="tsLblTotHours" text="Tổng giờ công" /></Column>
-    <Column id="tsColHours"><Text id="tsLblHours" text="Số giờ làm" /></Column>
-    <Column id="tsColOt"><Text id="tsLblOt" text="Giờ OT" /></Column>
-    <Column id="tsColStatus"><Text id="tsLblStatus" text="Trạng thái" /></Column> 
-</columns>
-<items>
-    <ColumnListItem id="tsRowTemplate">
-        <cells>
-            <Text id="tsCellTsDate" text="{path: 'WorkDate', type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}" />
-            <Text id="tsCellTsShift" text="{ShiftId}" />
-            <Text id="tsCellTsIn" text="{path: 'ActIn', formatter: '.formatEdmTime'}" />
-            <Text id="tsCellTsOut" text="{path: 'ActOut', formatter: '.formatEdmTime'}" />
-            <Text id="tsCellTsTotHours" text="{TotHours}" />
-            <Text id="tsCellTsHours" text="{WorkHours}" />
-            <Text id="tsCellTsOt" text="{OtHours}" />
-            <ObjectStatus id="tsCellTsStatus" text="{status}" state="{= ${status} === 'APPROVED' ? 'Success' : 'Warning' }" />
-        </cells>
-    </ColumnListItem>
-</items>
-            </Table>
+          <VBox id="vbTimesheetContainer" class="sapUiTinyMargin">
+    
+    <!-- 1. Bộ lọc Search Help / FilterBar -->
+    <fb:FilterBar id="filterBar" search=".onSearch" reset=".onReset" showClearButton="true">
+        <fb:filterGroupItems>
+            
+            <!-- Search Help theo Ngày làm việc (Đã thêm id="idWorkDateFilterGroup") -->
+            <fb:FilterGroupItem 
+                id="idWorkDateFilterGroup"
+                name="WorkDateGroup" 
+                label="Work Date" 
+                groupName="Group1" 
+                visibleInFilterBar="true">
+                <fb:control>
+                    <DatePicker
+                        id="idWorkDateFilter"
+                        displayFormat="medium"
+                        valueFormat="yyyy-MM-dd"
+                        placeholder="Select work date..."/>
+                </fb:control>
+            </fb:FilterGroupItem>
+
+            <!-- Search Help F4 Pop-up cho Trạng thái (Đã thêm id="idStatusFilterGroup") -->
+            <fb:FilterGroupItem 
+                id="idStatusFilterGroup"
+                name="StatusGroup" 
+                label="Status" 
+                groupName="Group1" 
+                visibleInFilterBar="true">
+                <fb:control>
+                    <Input
+                        id="idStatusFilter"
+                        placeholder="Select status..."
+                        showValueHelp="true"
+                        valueHelpOnly="true"
+                        valueHelpRequest=".onStatusValueHelp"/>
+                </fb:control>
+            </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                </fb:FilterBar>
+
+                <!-- 2. Bảng hiển thị dữ liệu quẹt thẻ thực tế -->
+                <Table id="timesheetTable" 
+                       items="{path: '/WorkingTime', parameters: {mode: 'OneWay'}}"
+                       mode="SingleSelectLeft"
+                       growing="true"
+                       growingThreshold="10"
+                       growingScrollToLoad="false"
+                       growingTriggerText="More">
+                    <headerToolbar>
+                        <OverflowToolbar id="tableHeader">
+                            <Title id="tableTitle" text="My Timesheet Data" level="H2"/>
+                            <ToolbarSpacer id="timesheetSpacer"/>
+                            <Button id="btnSubmitReport" 
+                                    text="Submit Dispute Request" 
+                                    type="Emphasized" 
+                                    icon="sap-icon://request" 
+                                    press="onPressSubmitDispute"/>
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column id="tsColDate"><Text id="tsLblDate" text="Work Date" /></Column>
+                        <Column id="tsColShift"><Text id="tsLblShift" text="Shift ID" /></Column>
+                        <Column id="tsColIn"><Text id="tsLblIn" text="Check-in Time" /></Column>
+                        <Column id="tsColOut"><Text id="tsLblOut" text="Check-out Time" /></Column>
+                        <Column id="tsColTotHours"><Text id="tsLblTotHours" text="Actual Hours" /></Column>
+                        <Column id="tsColHours"><Text id="tsLblHours" text="Standard Hours" /></Column>
+                        <Column id="tsColOt"><Text id="tsLblOt" text="Overtime Hours" /></Column>
+                        <Column id="tsColStatus"><Text id="tsLblStatus" text="Status" /></Column> 
+                    </columns>
+                    <items>
+                        <ColumnListItem id="tsRowTemplate">
+                            <cells>
+                                <Text id="tsCellTsDate" text="{path: 'WorkDate', type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}" />
+                                <Text id="tsCellTsShift" text="{ShiftId}" />
+                                <Text id="tsCellTsIn" text="{path: 'ActIn', formatter: '.formatEdmTime'}" />
+                                <Text id="tsCellTsOut" text="{path: 'ActOut', formatter: '.formatEdmTime'}" />
+                                <Text id="tsCellTsTotHours" text="{TotHours}" />
+                                <Text id="tsCellTsHours" text="{WorkHours}" />
+                                <Text id="tsCellTsOt" text="{OtHours}" />
+                                <ObjectStatus id="tsCellTsStatus" text="{status}" state="{= ${status} === 'APPROVED' ? 'Success' : 'Warning' }" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
         </content>
     </Page>
 </mvc:View>

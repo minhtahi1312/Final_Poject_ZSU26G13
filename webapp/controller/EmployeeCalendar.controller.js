@@ -452,30 +452,42 @@ sap.ui.define(
           var oEntry = {
             PersonnelNumber: oAppt.Pernr,
             WorkDate: dWorkDate,
+            ShiftId: oAppt.ShiftId,
             RequestType: "LEAVE",
             EmployeeComment: sReason,
             DisputeStatus: "PENDING",
           };
+          BusyIndicator.show(0);
 
-          oModel.create("/MyDisputes", oEntry, {
-            success: function () {
-              MessageBox.success("Gửi đơn nghỉ phép thành công.");
-            },
+  var that = this;
 
-            error: function (oError) {
-              BusyIndicator.hide();
+  oModel.create("/MyDisputes", oEntry, {
+    success: function () {
+      // 2. TẮT BusyIndicator NGAY LẬP TỨC trước khi hiện MessageBox
+      BusyIndicator.hide();
+      
+      MessageBox.success("Gửi đơn nghỉ phép thành công.", {
+        onClose: function () {
+          // 3. Tải lại dữ liệu lịch để cập nhật giao diện (nếu cần)
+          that._loadCalendarData();
+        }
+      });
+    },
 
-              var sMessage = "Không thể gửi đơn.";
+    error: function (oError) {
+      // 4. Luôn luôn nhớ TẮT BusyIndicator nếu xảy ra lỗi
+      BusyIndicator.hide();
 
-              try {
-                var oResponse = JSON.parse(oError.responseText);
-                sMessage = oResponse.error.message.value;
-              } catch (e) {}
+      var sMessage = "Không thể gửi đơn.";
+      try {
+        var oResponse = JSON.parse(oError.responseText);
+        sMessage = oResponse.error.message.value;
+      } catch (e) {}
 
-              MessageBox.error(sMessage);
-            },
-          });
-        },
+      MessageBox.error(sMessage);
+    }
+  });
+},
       },
     );
   },
