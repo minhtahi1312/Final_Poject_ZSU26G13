@@ -5,74 +5,36 @@
     xmlns:unified="sap.ui.unified"
     xmlns:core="sap.ui.core">
 
-    <Page
-        id="calendarPage"
-        title="Employee Work Schedule">
-
+    <Page id="calendarPage" title="{i18n>titleEmpCalendar}">
         <content>
-
             <PlanningCalendar
-
                 id="planningCalendar"
-
                 startDate="{$custom>/currentDate}"
-
                 rows="{calendarModel>/CalendarRows}"
-
                 appointmentSelect="onAppointmentSelect"
-
                 viewKey="Week"
-
                 showRowHeaders="true"
-
                 appointmentsVisualization="Filled"
-
                 stickyHeader="true">
-
-
                 <rows>
-
                     <PlanningCalendarRow
-
                         id="employeeRow"
-
                         title="{calendarModel>EmployeeName}"
-
                         text="{calendarModel>EmployeeText}"
-
-                        appointments="{
-                            path:'calendarModel>Appointments',
-                            templateShareable:false
-                        }">
-
+                        appointments="{ path:'calendarModel>Appointments', templateShareable:false }">
                         <appointments>
-
                             <unified:CalendarAppointment
-
                                 id="appointment"
-
                                 startDate="{calendarModel>StartDate}"
-
                                 endDate="{calendarModel>EndDate}"
-
                                 title="{calendarModel>Title}"
-
                                 text="{calendarModel>Text}"
-
                                 icon="sap-icon://appointment-2"
-
                                 type="{calendarModel>ColorType}"/>
-
                         </appointments>
-
                     </PlanningCalendarRow>
-
                 </rows>
-
             </PlanningCalendar>
-
         </content>
-
     </Page>
-
 </mvc:View>

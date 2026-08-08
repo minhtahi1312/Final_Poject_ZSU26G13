@@ -3,142 +3,58 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:fb="sap.ui.comp.filterbar">
-    <Page id="disputesPage" title=" Disputes History " showHeader="true">
+    <Page id="disputesPage" title="{i18n>titleDisputesHistory}" showHeader="true">
         <content>
             <VBox id="vbDisputesContainer" class="sapUiTinyMargin">
-
-                <!-- 1. Bộ lọc Search Help / FilterBar -->
-                <fb:FilterBar id="filterBarDisputes" search=".onSearch" reset=".onReset" showClearButton="true">
+                <fb:FilterBar id="filterBarDisputes" search=".onSearch" reset=".onReset" showClearOnFB="true">
                     <fb:filterGroupItems>
-
-                        <!-- Search Help cho Ngày làm việc (Đã đổi ID thành idDispWorkDateFilter) -->
-                        <fb:FilterGroupItem
-                            id="fgDispWorkDate"
-                            name="WorkDateGroup"
-                            label="Work Date"
-                            groupName="Group1"
-                            visibleInFilterBar="true">
+                        <fb:FilterGroupItem id="fgDispWorkDate" name="WorkDateGroup" label="{i18n>lblWorkDate}" groupName="Group1" visibleInFilterBar="true">
                             <fb:control>
-                                <DatePicker
-                                    id="idDispWorkDateFilter"
-                                    displayFormat="medium"
-                                    valueFormat="yyyy-MM-dd"
-                                    placeholder="Select work date..."/>
+                                <DatePicker id="idDispWorkDateFilter" displayFormat="medium" valueFormat="yyyy-MM-dd" placeholder="{i18n>phSelectDate}"/>
                             </fb:control>
                         </fb:FilterGroupItem>
 
-                        <!-- Search Help F4 Pop-up cho Loại yêu cầu (Đã đổi ID thành idDispRequestTypeFilter) -->
-                        <fb:FilterGroupItem
-                            id="fgDispRequestType"
-                            name="RequestTypeGroup"
-                            label="Request Type"
-                            groupName="Group1"
-                            visibleInFilterBar="true">
+                        <fb:FilterGroupItem id="fgDispRequestType" name="RequestTypeGroup" label="{i18n>lblReqType}" groupName="Group1" visibleInFilterBar="true">
                             <fb:control>
-                                <Input
-                                    id="idDispRequestTypeFilter"
-                                    placeholder="Select request type..."
-                                    showValueHelp="true"
-                                    valueHelpOnly="true"
-                                    valueHelpRequest=".onRequestTypeValueHelp"/>
+                                <Input id="idDispRequestTypeFilter" placeholder="{i18n>phSelectReqType}" showValueHelp="true" valueHelpOnly="true" valueHelpRequest=".onRequestTypeValueHelp"/>
                             </fb:control>
                         </fb:FilterGroupItem>
-
                     </fb:filterGroupItems>
                 </fb:FilterBar>
 
-                <!-- 2. Bảng hiển thị danh sách đơn khiếu nại gốc -->
-                <Table id="disputesTable" 
-                       items="{/MyDisputes}"
-                       mode="SingleSelectLeft"
-                       growing="true"
-                       growingThreshold="10"
-                       growingScrollToLoad="false"
-                       growingTriggerText="More">
+                <Table id="disputesTable" items="{/MyDisputes}" mode="SingleSelectLeft" growing="true" growingThreshold="10" growingScrollToLoad="false" growingTriggerText="More">
                     <headerToolbar>
                         <OverflowToolbar id="disputeHeader">
-                            <Title id="disputeTitle" text="Actual Time Card Data" level="H2"/>
+                            <Title id="disputeTitle" text="{i18n>titleActualData}" level="H2"/>
                             <ToolbarSpacer id="tableSpacer"/>
-                            <Button id="btnCancel" 
-                                    text="Cancel Selected Request" 
-                                    type="Reject" 
-                                    icon="sap-icon://decline" 
-                                    press="onCancelDispute"/>
+                            <Button id="btnCancel" text="{i18n>btnCancelRequest}" type="Reject" icon="sap-icon://decline" press="onCancelDispute"/>
                         </OverflowToolbar>
                     </headerToolbar>
                     
                     <columns>
-                        <Column id="colWorkDate">
-                            <Text id="txtWorkDate" text="Work Date"/>
-                        </Column>
-
-                        <Column id="colRequestType">
-                            <Text id="txtRequestType" text="Request Type"/>
-                        </Column>
-
-                        <Column id="colProposedIn">
-                            <Text id="txtProposedIn" text="Proposed In"/>
-                        </Column>
-
-                        <Column id="colProposedOut">
-                            <Text id="txtProposedOut" text="Proposed Out"/>
-                        </Column>
-
-                        <Column id="colComment" width="15rem">
-                            <Text id="txtComment" text="Reason"/>
-                        </Column>
-
-                        <Column id="colStatus">
-                            <Text id="txtStatus" text="Status"/>
-                        </Column>
-
-                        <Column id="colApproverComment" width="15rem">
-                            <Text id="txtApproverCommentHeader" text="Approver Comment"/>
-                        </Column>
+                        <Column id="colWorkDate"><Text id="txtWorkDate" text="{i18n>lblWorkDate}"/></Column>
+                        <Column id="colRequestType"><Text id="txtRequestType" text="{i18n>colReqType}"/></Column>
+                        <Column id="colProposedIn"><Text id="txtProposedIn" text="{i18n>colProposedIn}"/></Column>
+                        <Column id="colProposedOut"><Text id="txtProposedOut" text="{i18n>colProposedOut}"/></Column>
+                        <Column id="colComment" width="15rem"><Text id="txtComment" text="{i18n>colReason}"/></Column>
+                        <Column id="colStatus"><Text id="txtStatus" text="{i18n>colStatus}"/></Column>
+                        <Column id="colApproverComment" width="15rem"><Text id="txtApproverCommentHeader" text="{i18n>colApproverComment}"/></Column>
                     </columns>
 
                     <items>
                         <ColumnListItem id="itemDispute">
                             <cells>
-                                <Text id="txtDate"
-                                      text="{path:'WorkDate',
-                                             type:'sap.ui.model.type.Date',
-                                             formatOptions:{style:'medium'}}"/>
-
-                                <Text id="txtReqType"
-                                      text="{RequestType}"/>
-
-                                <Text id="txtIn"
-                                      text="{
-                                          path:'ProposedIn',
-                                          formatter: '.formatEdmTime'
-                                      }"/>
-
-                                <Text id="txtOut"
-                                      text="{
-                                          path:'ProposedOut',
-                                          formatter: '.formatEdmTime'
-                                      }"/>
-
-                                <Text id="txtReason"
-                                      text="{EmployeeComment}"
-                                      wrapping="true"
-                                      renderWhitespace="true"
-                                      class="sapUiSelectable forceWordBreak" />
-
-                                <ObjectStatus id="objStatus"
-                                              text="{DisputeStatus}"/>
-
-                                <Text id="txtApproverComment"
-                                      text="{ApproverComment}"
-                                      wrapping="true"
-                                      renderWhitespace="true"
-                                      class="sapUiSelectable forceWordBreak" />
+                                <Text id="txtDate" text="{path:'WorkDate', type:'sap.ui.model.type.Date', formatOptions:{style:'medium'}}"/>
+                                <Text id="txtReqType" text="{RequestType}"/>
+                                <Text id="txtIn" text="{path:'ProposedIn', formatter: '.formatEdmTime'}"/>
+                                <Text id="txtOut" text="{path:'ProposedOut', formatter: '.formatEdmTime'}"/>
+                                <Text id="txtReason" text="{EmployeeComment}" wrapping="true" renderWhitespace="true" class="sapUiSelectable forceWordBreak" />
+                                <ObjectStatus id="objStatus" text="{DisputeStatus}"/>
+                                <Text id="txtApproverComment" text="{ApproverComment}" wrapping="true" renderWhitespace="true" class="sapUiSelectable forceWordBreak" />
                             </cells>
                         </ColumnListItem>
                     </items>
                 </Table>
-
             </VBox>
         </content>
     </Page>
