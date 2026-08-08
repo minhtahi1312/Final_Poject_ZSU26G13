@@ -29,7 +29,7 @@ sap.ui.define(
       "my.report.zmydisputes.controller.EmployeeCalendar",
       {
         onInit: function () {
-          // Đặt ngày mốc mặc định ban đầu hiển thị trên bộ lịch cá nhân
+          
           var oCustomModel = new JSONModel({
             currentDate: this._getStartOfWeek(new Date()),
           });
@@ -40,16 +40,10 @@ sap.ui.define(
             .attachPatternMatched(this._onRouteMatched, this);
         },
 
-        /*
-         * Hàm tự động chạy khi Route "EmployeeCalendar" được khớp
-         */
         _onRouteMatched: function () {
           this._loadCalendarData();
         },
 
-        /**
-         * Hàm đọc dữ liệu thực tế từ OData
-         */
         _getStartOfWeek: function (oDate) {
           var d = new Date(oDate);
           var day = d.getDay();
@@ -109,7 +103,7 @@ sap.ui.define(
                 if (!item.PlanDate) {
                   return;
                 }
-                // Xử lý múi giờ đồng bộ tránh lệch ngày hiển thị
+          
                 var dRawDate = new Date(item.PlanDate);
                 var dPlanDate = new Date(
                   dRawDate.getTime() + dRawDate.getTimezoneOffset() * 60000,
@@ -226,9 +220,7 @@ sap.ui.define(
           });
         },
 
-        /**
-         * Hàm xử lý hiển thị thông tin chi tiết khi nhấn chọn ca làm việc
-         */
+        
         onAppointmentSelect: function (oEvent) {
           var oAppointment = oEvent.getParameter("appointment");
           if (!oAppointment) {
@@ -375,7 +367,7 @@ sap.ui.define(
         _openLeaveDialog: function (oAppt) {
           var that = this;
 
-          // Ô nhập lý do nghỉ
+          
           var oReason = new TextArea({
             width: "100%",
             rows: 4,
@@ -463,19 +455,19 @@ sap.ui.define(
 
   oModel.create("/MyDisputes", oEntry, {
     success: function () {
-      // 2. TẮT BusyIndicator NGAY LẬP TỨC trước khi hiện MessageBox
+      
       BusyIndicator.hide();
       
       MessageBox.success("Gửi đơn nghỉ phép thành công.", {
         onClose: function () {
-          // 3. Tải lại dữ liệu lịch để cập nhật giao diện (nếu cần)
+         
           that._loadCalendarData();
         }
       });
     },
 
     error: function (oError) {
-      // 4. Luôn luôn nhớ TẮT BusyIndicator nếu xảy ra lỗi
+      
       BusyIndicator.hide();
 
       var sMessage = "Không thể gửi đơn.";

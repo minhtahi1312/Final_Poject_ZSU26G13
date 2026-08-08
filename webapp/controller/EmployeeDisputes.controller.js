@@ -52,10 +52,10 @@ sap.ui.define(
 
           BusyIndicator.show(0);
 
-          // Đọc danh sách MyDisputes thực tế
+          
           oModel.read("/MyDisputes", {
             urlParameters: {
-              "$select": "RequestType" // Tối ưu chỉ chọn trường RequestType
+              "$select": "RequestType" 
             },
             success: function (oData) {
               BusyIndicator.hide();
@@ -64,14 +64,14 @@ sap.ui.define(
               var aTypes = [];
               var mTypeMap = {};
 
-              // A. Tùy chọn mặc định
+              
               aTypes.push({
                 Key: "",
                 Title: "All Request Types",
                 Description: "Show all records"
               });
 
-              // B. Đưa các loại đơn thực tế từ DB vào danh sách
+              
               aResults.forEach(function (item) {
                 var sKey = item.RequestType;
                 if (sKey && !mTypeMap[sKey]) {
@@ -84,7 +84,7 @@ sap.ui.define(
                 }
               });
 
-              // C. Tự động kiểm tra và chèn thêm loại 'LEAVE' nếu DB chưa có
+             
               if (!mTypeMap["LEAVE"]) {
                 aTypes.push({
                   Key: "LEAVE",
@@ -207,13 +207,13 @@ sap.ui.define(
           var oTable = this.byId("disputesTable");
           var oSelectedItem = oTable.getSelectedItem();
 
-          // Kiểm tra xem người dùng đã tick chọn dòng nào chưa
+          
           if (!oSelectedItem) {
             MessageToast.show("Vui lòng chọn một dòng để hủy!");
             return;
           }
 
-          // Lấy ra dữ liệu của dòng được tick chọn
+          
           var oContext = oSelectedItem.getBindingContext();
           var oSelectedData = oContext.getObject();
 
