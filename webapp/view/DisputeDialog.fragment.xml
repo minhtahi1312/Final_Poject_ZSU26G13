@@ -1,34 +1,30 @@
 <core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
-    <Dialog id="disputeDialog" title="Submit Dispute" contentWidth="400px">
+    <Dialog id="disputeDialog" title="{i18n>titleSubmitDispute}" contentWidth="400px">
         <content>
             <VBox id="vboxContainer" class="sapUiSmallMargin">
-                <Label id="lblRequestType" text="Request Type" required="true" class="sapUiSmallMarginTop" />
+                <Label id="lblRequestType" text="{i18n>lblReqType}" required="true" class="sapUiSmallMarginTop" />
                 <Select id="selectRequestType" width="100%" change=".onRequestTypeChange" items="{/ZI_REQ_TYPE_VH_26}">
-    <core:Item id="itemReqType" key="{RequestType}" text="{RequestTypeText}" />
-</Select>
+                    <core:Item id="itemReqType" key="{RequestType}" text="{RequestTypeText}" />
+                </Select>
 
-                <Label id="lblProposedIn" text="Proposed In Time" required="true" class="sapUiSmallMarginTop" />
-                <TimePicker id="tpProposedIn" width="100%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="Select In Time" />
+                <Label id="lblProposedIn" text="{i18n>lblProposedIn}" required="true" class="sapUiSmallMarginTop" />
+                <TimePicker id="tpProposedIn" width="100%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="{i18n>phSelectInTime}" />
 
-                <Label id="lblProposedOut" text="Proposed Out Time" required="true" class="sapUiSmallMarginTop" />
-                <TimePicker id="tpProposedOut" width="100%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="Select Out Time" />
+                <Label id="lblProposedOut" text="{i18n>lblProposedOut}" required="true" class="sapUiSmallMarginTop" />
+                <TimePicker id="tpProposedOut" width="100%" valueFormat="HH:mm:ss" displayFormat="HH:mm:ss" placeholder="{i18n>phSelectOutTime}" />
+                
                 <VBox id="vbOTSection" visible="false">
-                 <Label id="lblOTHours"
-                       text="OT Hours"
-                       class="sapUiSmallMarginTop"/>
-
-                <Input id="inputOTHours"
-                       width="100%"
-                       type="Number"
-                       placeholder="Example: 2.5"/>
-</VBox>
-                <Label id="lblReason" text="Employee Comment" required="true" class="sapUiSmallMarginTop" />
-                <TextArea id="inputReason" width="100%" rows="4" placeholder="Enter your reason here..." />
+                    <Label id="lblOTHours" text="{i18n>lblOtHours}" class="sapUiSmallMarginTop"/>
+                    <Input id="inputOTHours" width="100%" type="Number" placeholder="{i18n>phExampleOt}"/>
+                </VBox>
+                
+                <Label id="lblReason" text="{i18n>lblEmpComment}" required="true" class="sapUiSmallMarginTop" />
+                <TextArea id="inputReason" width="100%" rows="4" placeholder="{i18n>phEnterReason}" />
             </VBox>
         </content>
         <buttons>
-            <Button id="btnSubmit" text="Submit" type="Emphasized" press=".onConfirmSubmit" />
-            <Button id="btnCancelDialog" text="Cancel" press=".onCancelSubmit" />
+            <Button id="btnSubmit" text="{i18n>btnSubmit}" type="Emphasized" press=".onConfirmSubmit" />
+            <Button id="btnCancelDialog" text="{i18n>btnCancel}" press=".onCancelSubmit" />
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

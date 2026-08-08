@@ -1,5 +1,4 @@
-sap.ui.define(
-  [
+sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
@@ -9,357 +8,254 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/m/SelectDialog",
     "sap/m/StandardListItem",
-    "sap/ui/model/json/JSONModel",
-  ],
-  function (
-    Controller,
-    Fragment,
-    MessageToast,
-    MessageBox,
-    BusyIndicator,
-    Filter,
-    FilterOperator,
-    SelectDialog,
-    StandardListItem,
-    JSONModel,
-  ) {
+    "sap/ui/model/json/JSONModel"
+], function (Controller, Fragment, MessageToast, MessageBox, BusyIndicator, Filter, FilterOperator, SelectDialog, StandardListItem, JSONModel) {
     "use strict";
 
-    return Controller.extend(
-      "my.report.zmydisputes.controller.EmployeeTimesheet",
-      {
+    return Controller.extend("my.report.zmydisputes.controller.EmployeeTimesheet", {
+        
         onInit: function () {
-          this.getOwnerComponent()
-            .getRouter()
-            .getRoute("EmployeeTimesheet")
-            .attachPatternMatched(this._onRouteMatched, this);
+            this.getOwnerComponent().getRouter().getRoute("EmployeeTimesheet").attachPatternMatched(this._onRouteMatched, this);
+        },
+
+        _getI18nText: function (sKey, aArgs) {
+            return this.getView().getModel("i18n").getResourceBundle().getText(sKey, aArgs);
         },
 
         _onRouteMatched: function () {
-          var oTable = this.byId("timesheetTable");
-
-          if (!oTable) {
-            return;
-          }
-
-          var oBinding = oTable.getBinding("items");
-
-          if (oBinding) {
-            oBinding.refresh(true);
-          }
+            var oTable = this.byId("timesheetTable");
+            if (!oTable) return;
+            var oBinding = oTable.getBinding("items");
+            if (oBinding) oBinding.refresh(true);
         },
+
+        // =========================================================
+        // FILTERING & VALUE HELPS
+        // =========================================================
+
         onStatusValueHelp: function () {
-          var oInput = this.byId("idStatusFilter");
-          var oModel = this.getView().getModel();
+            var oInput = this.byId("idStatusFilter");
+            var oModel = this.getView().getModel();
+            var that = this;
 
-          BusyIndicator.show(0);
+            BusyIndicator.show(0);
 
-          // Get danh sách Status thực tế từ Entity WorkingTime
-          oModel.read("/WorkingTime", {
-            success: function (oData) {
-              BusyIndicator.hide();
+            oModel.read("/WorkingTime", {
+                success: function (oData) {
+                    BusyIndicator.hide();
+                    var aResults = oData.results || [];
+                    var aUniqueStatus = [];
+                    var mStatusMap = {};
 
-              var aResults = oData.results || [];
-              var aUniqueStatus = [];
-              var mStatusMap = {};
+                    aUniqueStatus.push({
+                        Key: "",
+                        Title: that._getI18nText("txtAllStatus"),
+                        Description: that._getI18nText("txtShowAll")
+                    });
 
-              // Lựa chọn mặc định reset/tất cả
-              aUniqueStatus.push({
-                Key: "",
-                Title: "Tất cả trạng thái",
-                Description: "Hiển thị toàn bộ",
-              });
+                    aResults.forEach(function (item) {
+                        if (item.status && !mStatusMap[item.status]) {
+                            mStatusMap[item.status] = true;
+                            aUniqueStatus.push({
+                                Key: item.status,
+                                Title: item.status,
+                                Description: that._getI18nText("txtStatusPrefix", [item.status])
+                            });
+                        }
+                    });
 
-              // Bóc tách danh sách Status duy nhất từ Backend
-              aResults.forEach(function (item) {
-                if (item.status && !mStatusMap[item.status]) {
-                  mStatusMap[item.status] = true;
-                  aUniqueStatus.push({
-                    Key: item.status,
-                    Title: item.status,
-                    Description: "Trạng thái: " + item.status,
-                  });
+                    var oValueHelpDialog = new SelectDialog({
+                        title: that._getI18nText("titleSelectStatus"),
+                        items: {
+                            path: "/",
+                            template: new StandardListItem({
+                                title: "{Title}",
+                                description: "{Description}",
+                                type: "Active"
+                            })
+                        },
+                        search: function (oEvent) {
+                            var sValue = oEvent.getParameter("value");
+                            var oFilter = new Filter("Title", FilterOperator.Contains, sValue);
+                            oEvent.getSource().getBinding("items").filter([oFilter]);
+                        },
+                        confirm: function (oEvent) {
+                            var oSelectedItem = oEvent.getParameter("selectedItem");
+                            if (oSelectedItem) {
+                                oInput.setValue(oSelectedItem.getTitle());
+                                oInput.data("selectedKey", oSelectedItem.getBindingContext().getProperty("Key"));
+                            }
+                        }
+                    });
+
+                    oValueHelpDialog.setModel(new JSONModel(aUniqueStatus));
+                    oValueHelpDialog.open();
+                },
+                error: function (oError) {
+                    BusyIndicator.hide();
+                    console.error("Error loading /WorkingTime:", oError);
+                    MessageBox.error(that._getI18nText("msgLoadStatusError"));
                 }
-              });
-
-              // Tạo SelectDialog Value Help
-              var oValueHelpDialog = new SelectDialog({
-                title: "Chọn Trạng thái",
-                items: {
-                  path: "/",
-                  template: new StandardListItem({
-                    title: "{Title}",
-                    description: "{Description}",
-                    type: "Active",
-                  }),
-                },
-                search: function (oEvent) {
-                  var sValue = oEvent.getParameter("value");
-                  var oFilter = new Filter(
-                    "Title",
-                    FilterOperator.Contains,
-                    sValue,
-                  );
-                  oEvent.getSource().getBinding("items").filter([oFilter]);
-                },
-                confirm: function (oEvent) {
-                  var oSelectedItem = oEvent.getParameter("selectedItem");
-                  if (oSelectedItem) {
-                    var oContext = oSelectedItem.getBindingContext();
-                    var sKey = oContext.getProperty("Key");
-
-                    oInput.setValue(oSelectedItem.getTitle());
-                    oInput.data("selectedKey", sKey);
-                  }
-                },
-              });
-
-              oValueHelpDialog.setModel(new JSONModel(aUniqueStatus));
-              oValueHelpDialog.open();
-            },
-            error: function () {
-              BusyIndicator.hide();
-              MessageBox.error("Không thể tải danh sách trạng thái.");
-            },
-          });
+            });
         },
 
-        /**
-         * 2. HÀM XỬ LÝ LỌC DỮ LIỆU KHI NHẤN "GO / SEARCH" TRÊN FILTERBAR
-         */
         onSearch: function () {
-          var aFilters = [];
+            var aFilters = [];
+            var dDate = this.byId("idWorkDateFilter").getDateValue();
 
-          // A. Lọc theo Ngày làm việc
-          var oDatePicker = this.byId("idWorkDateFilter");
-          var dDate = oDatePicker.getDateValue();
+            if (dDate) {
+                var dFilterDate = new Date(Date.UTC(dDate.getFullYear(), dDate.getMonth(), dDate.getDate(), 12, 0, 0));
+                aFilters.push(new Filter("WorkDate", FilterOperator.EQ, dFilterDate));
+            }
 
-          if (dDate) {
-            var dFilterDate = new Date(
-              Date.UTC(
-                dDate.getFullYear(),
-                dDate.getMonth(),
-                dDate.getDate(),
-                12,
-                0,
-                0,
-              ),
-            );
-            aFilters.push(
-              new Filter("WorkDate", FilterOperator.EQ, dFilterDate),
-            );
-          }
+            var oStatusInput = this.byId("idStatusFilter");
+            var sStatusKey = oStatusInput.data("selectedKey");
 
-          // B. Lọc theo Trạng thái chọn từ Value Help
-          var oStatusInput = this.byId("idStatusFilter");
-          var sStatusKey = oStatusInput.data("selectedKey");
+            if (sStatusKey) {
+                aFilters.push(new Filter("status", FilterOperator.EQ, sStatusKey));
+            }
 
-          if (sStatusKey) {
-            aFilters.push(new Filter("status", FilterOperator.EQ, sStatusKey));
-          }
-
-          // Áp dụng bộ lọc vào Table Binding
-          var oTable = this.byId("timesheetTable");
-          var oBinding = oTable.getBinding("items");
-          if (oBinding) {
-            oBinding.filter(aFilters);
-          }
+            var oBinding = this.byId("timesheetTable").getBinding("items");
+            if (oBinding) oBinding.filter(aFilters);
         },
 
-        /**
-         * 3. HÀM RESET BỘ LỌC SEARCH HELP
-         */
         onReset: function () {
-          this.byId("idWorkDateFilter").setDateValue(null);
+            this.byId("idWorkDateFilter").setDateValue(null);
+            var oStatusInput = this.byId("idStatusFilter");
+            oStatusInput.setValue("");
+            oStatusInput.data("selectedKey", "");
 
-          var oStatusInput = this.byId("idStatusFilter");
-          oStatusInput.setValue("");
-          oStatusInput.data("selectedKey", "");
-
-          var oTable = this.byId("timesheetTable");
-          var oBinding = oTable.getBinding("items");
-          if (oBinding) {
-            oBinding.filter([]);
-          }
+            var oBinding = this.byId("timesheetTable").getBinding("items");
+            if (oBinding) oBinding.filter([]);
         },
+
+        // =========================================================
+        // UTILITIES & ACTIONS
+        // =========================================================
 
         formatEdmTime: function (oTime) {
-          if (
-            !oTime ||
-            typeof oTime !== "object" ||
-            oTime.ms === undefined ||
-            oTime.ms === null
-          ) {
-            return "--:--:--"; // Hoặc trả về ""
-          }
-          // Tính toán chuyển đổi mili-giây thành giờ:phút:giây
-          var iTotalSeconds = Math.floor(oTime.ms / 1000);
-          var iHours = Math.floor(iTotalSeconds / 3600);
-          var iMinutes = Math.floor((iTotalSeconds % 3600) / 60);
-          var iSeconds = iTotalSeconds % 60;
+            if (!oTime || typeof oTime !== "object" || oTime.ms === undefined || oTime.ms === null) {
+                return "--:--:--"; 
+            }
+            var iTotalSeconds = Math.floor(oTime.ms / 1000);
+            var iHours = Math.floor(iTotalSeconds / 3600);
+            var iMinutes = Math.floor((iTotalSeconds % 3600) / 60);
+            var iSeconds = iTotalSeconds % 60;
 
-          // Chèn thêm số 0 ở trước nếu số nhỏ hơn 10
-          var sHours = iHours < 10 ? "0" + iHours : iHours;
-          var sMinutes = iMinutes < 10 ? "0" + iMinutes : iMinutes;
-          var sSeconds = iSeconds < 10 ? "0" + iSeconds : iSeconds;
-
-          return sHours + ":" + sMinutes + ":" + sSeconds;
+            return String(iHours).padStart(2, "0") + ":" + String(iMinutes).padStart(2, "0") + ":" + String(iSeconds).padStart(2, "0");
         },
+
         onRequestTypeChange: function (oEvent) {
-          var sKey = oEvent.getSource().getSelectedKey();
-
-          var bVisible = sKey === "OVERTIME";
-
-          this.byId("vbOTSection").setVisible(bVisible);
+            var sKey = oEvent.getSource().getSelectedKey();
+            this.byId("vbOTSection").setVisible(sKey === "OVERTIME");
         },
-        /**
-         * 1. HÀM MỞ POPUP KHHIẾU NẠI (FRAGMENT)
-         */
-        onPressSubmitDispute: function (oEvent) {
-          var oView = this.getView();
 
-          // Lấy dòng đang chọn để kiểm tra xem nhân viên đã tick chọn dòng nào chưa
-          var oTable = this.byId("timesheetTable");
-          var oSelectedItem = oTable.getSelectedItem();
+        onPressSubmitDispute: function () {
+            var oView = this.getView();
+            var oSelectedItem = this.byId("timesheetTable").getSelectedItem();
 
-          if (!oSelectedItem) {
-            MessageBox.error("Vui lòng chọn một dòng dữ liệu chấm công trước!");
-            return;
-          }
+            if (!oSelectedItem) {
+                MessageBox.error(this._getI18nText("msgSelectRowToDispute"));
+                return;
+            }
 
-          // Đường dẫn Fragment được đổi về namespace mới của dự án zmy_disputes
-          var sFragmentName = "my.report.zmydisputes.view.DisputeDialog";
+            var sFragmentName = "my.report.zmydisputes.view.DisputeDialog";
 
-          if (!this._pDialog) {
-            this._pDialog = Fragment.load({
-              id: oView.getId(),
-              name: sFragmentName,
-              controller: this,
-            }).then(function (oDialog) {
-              oView.addDependent(oDialog);
-              return oDialog;
+            if (!this._pDialog) {
+                this._pDialog = Fragment.load({
+                    id: oView.getId(),
+                    name: sFragmentName,
+                    controller: this
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    return oDialog;
+                });
+            }
+            this._pDialog.then(function (oDialog) {
+                oDialog.open();
             });
-          }
-          this._pDialog.then(function (oDialog) {
-            oDialog.open();
-          });
         },
 
-        /**
-         * 2. HÀM XÁC NHẬN GỬI ĐƠN XUỐNG BACKEND RAP
-         */
         onConfirmSubmit: function (oEvent) {
-          var oDialog = oEvent.getSource().getParent();
-          var oView = this.getView();
-          var oModel = oView.getModel();
+            var oDialog = oEvent.getSource().getParent();
+            var oView = this.getView();
+            var oModel = oView.getModel();
+            var that = this;
 
-          // Lấy dữ liệu từ form trong Fragment
-          var sRequestType = oView.byId("selectRequestType").getSelectedKey();
-          var sProposedIn = oView.byId("tpProposedIn").getValue();
-          var sProposedOut = oView.byId("tpProposedOut").getValue();
-          var fOTHours = parseFloat(oView.byId("inputOTHours").getValue()) || 0;
-          console.log("OT =", fOTHours);
-          var sEmployeeComment = oView.byId("inputReason").getValue();
+            var sRequestType = oView.byId("selectRequestType").getSelectedKey();
+            var sProposedIn = oView.byId("tpProposedIn").getValue();
+            var sProposedOut = oView.byId("tpProposedOut").getValue();
+            var fOTHours = parseFloat(oView.byId("inputOTHours").getValue()) || 0;
+            var sEmployeeComment = oView.byId("inputReason").getValue();
 
-          if (!sProposedIn || !sProposedOut || !sEmployeeComment) {
-            MessageBox.warning("Vui lòng nhập đầy đủ thông tin bắt buộc!");
-            return;
-          }
-          if (sRequestType === "OVERTIME" && fOTHours <= 0) {
-            MessageBox.warning("Vui lòng nhập số giờ OT.");
-            return;
-          }
+            if (!sProposedIn || !sProposedOut || !sEmployeeComment) {
+                MessageBox.warning(this._getI18nText("msgFillMandatory"));
+                return;
+            }
+            if (sRequestType === "OVERTIME" && fOTHours <= 0) {
+                MessageBox.warning(this._getI18nText("msgEnterOtHours"));
+                return;
+            }
 
-          // Lấy thông tin dòng đang chọn theo chuẩn Freestyle
-          var oSelectedItem = this.byId("timesheetTable").getSelectedItem();
-          var oContext = oSelectedItem.getBindingContext();
+            var oContext = this.byId("timesheetTable").getSelectedItem().getBindingContext();
+            var sPernr = oContext.getProperty("Pernr");
+            var oDate = oContext.getProperty("WorkDate");
+            var sShiftId = oContext.getProperty("ShiftId");
 
-          // --- LẤY ĐỘNG TOÀN BỘ GIÁ TRỊ TỪ ROW ĐƯỢC CHỌN ---
-          var sPernr = oContext.getProperty("Pernr");
-          var oDate = oContext.getProperty("WorkDate");
-          var sShiftId = oContext.getProperty("ShiftId");
+            if (!sPernr || !oDate || !sShiftId) {
+                MessageBox.error(this._getI18nText("msgCannotIdentifyRow"));
+                return;
+            }
 
-          // Kiểm tra phòng hờ nếu dữ liệu dòng chọn bị thiếu trường bắt buộc
-          if (!sPernr || !oDate || !sShiftId) {
-            sap.m.MessageBox.error(
-              "Không thể xác định thông tin dòng được chọn. Vui lòng thử lại!",
-            );
-            sap.ui.core.BusyIndicator.hide();
-            return;
-          }
+            var formatTimeForODataV2 = function (sTime) {
+                if (!sTime) return null;
+                var aParts = sTime.split(":");
+                var iMs = (parseInt(aParts[0], 10) * 3600 + parseInt(aParts[1], 10) * 60 + parseInt(aParts[2], 10)) * 1000;
+                return { __edmType: "Edm.Time", ms: iMs };
+            };
 
-          // Định dạng lại ngày công sang chuỗi yyyy-MM-ddTHH:mm:ss khớp chuẩn OData Key
-          var sYear = oDate.getFullYear();
-          var sMonth = String(oDate.getMonth() + 1).padStart(2, "0");
-          var sDay = String(oDate.getDate()).padStart(2, "0");
-          var sFormattedDate = sYear + "-" + sMonth + "-" + sDay + "T00:00:00";
+            BusyIndicator.show(0);
 
-          var sBoundPath = "/createReport";
-          // Hàm biến đổi giờ sang định dạng OData V2 Edm.Time
-          var formatTimeForODataV2 = function (sTime) {
-            if (!sTime) return null;
-            var aParts = sTime.split(":");
-            var iMs =
-              (parseInt(aParts[0], 10) * 3600 +
-                parseInt(aParts[1], 10) * 60 +
-                parseInt(aParts[2], 10)) *
-              1000;
-            return { __edmType: "Edm.Time", ms: iMs };
-          };
+            oModel.callFunction("/createReport", {
+                method: "POST",
+                urlParameters: {
+                    Pernr: sPernr,
+                    WorkDate: oDate,
+                    ShiftId: sShiftId,
+                    request_type: sRequestType,
+                    proposed_in: formatTimeForODataV2(sProposedIn),
+                    proposed_out: formatTimeForODataV2(sProposedOut),
+                    ot_hours: sRequestType === "OVERTIME" ? fOTHours : 0,
+                    employee_comment: sEmployeeComment
+                },
+                success: function () {
+                    BusyIndicator.hide();
+                    MessageToast.show(that._getI18nText("msgDisputeSuccess"));
+                    oDialog.close();
 
-          // Bật màn hình chờ Loading
-          BusyIndicator.show(0);
-          // Gọi Action Function Import xuống Backend RAP
-          oModel.callFunction(sBoundPath, {
-            method: "POST",
-            urlParameters: {
-              Pernr: sPernr,
-              WorkDate: oDate,
-              ShiftId: sShiftId,
-
-              // 4 tham số nội dung phải viết THƯỜNG toàn bộ
-              request_type: sRequestType,
-              proposed_in: formatTimeForODataV2(sProposedIn),
-              proposed_out: formatTimeForODataV2(sProposedOut),
-              ot_hours: sRequestType === "OVERTIME" ? fOTHours : 0,
-              employee_comment: sEmployeeComment,
-            },
-            success: function (oData, response) {
-              BusyIndicator.hide();
-              MessageToast.show("Đơn giải trình đã gửi thành công!");
-              oDialog.close();
-
-              oView.byId("tpProposedIn").setValue("");
-              oView.byId("tpProposedOut").setValue("");
-              oView.byId("inputOTHours").setValue("");
-              oView.byId("inputReason").setValue("");
-              var oTable = this.byId("timesheetTable");
-              var oBinding = oTable.getBinding("items");
-
-              if (oBinding) {
-                oBinding.refresh(true);
-              }
-            }.bind(this),
-
-            error: function (oError) {
-              BusyIndicator.hide();
-              var sMsg = "Gửi thất bại!";
-              try {
-                var oErrObj = JSON.parse(oError.responseText);
-                sMsg += " Lỗi: " + oErrObj.error.message.value;
-              } catch (e) {}
-              MessageBox.error(sMsg);
-            },
-          });
+                    oView.byId("tpProposedIn").setValue("");
+                    oView.byId("tpProposedOut").setValue("");
+                    oView.byId("inputOTHours").setValue("");
+                    oView.byId("inputReason").setValue("");
+                    
+                    var oBinding = that.byId("timesheetTable").getBinding("items");
+                    if (oBinding) oBinding.refresh(true);
+                },
+                error: function (oError) {
+                    BusyIndicator.hide();
+                    console.error("Error calling /createReport:", oError);
+                    var sMsg = that._getI18nText("msgDisputeSubmitError");
+                    try {
+                        var oErrObj = JSON.parse(oError.responseText);
+                        sMsg += " " + oErrObj.error.message.value;
+                    } catch (e) {}
+                    MessageBox.error(sMsg);
+                }
+            });
         },
 
-        /**
-         * 3. HÀM BẤM NÚT HỦY ĐÓNG POPUP
-         */
         onCancelSubmit: function (oEvent) {
-          oEvent.getSource().getParent().close();
-        },
-      },
-    );
-  },
-);
+            oEvent.getSource().getParent().close();
+        }
+    });
+});

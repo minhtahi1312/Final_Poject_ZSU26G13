@@ -4,18 +4,18 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("my.report.zmydisputes.controller.App", {
+        
         onInit: function () {
-            // Lấy bộ định tuyến (Router) từ Component hệ thống
             this.oRouter = this.getOwnerComponent().getRouter();
         },
 
-        // Hàm ẩn/hiện nhanh thanh menu bên trái khi bấm nút ba sọc
+        // Toggle side menu collapse/expand
         onSideNavButtonPress: function () {
             var oToolPage = this.byId("toolPage");
             oToolPage.setSideExpanded(!oToolPage.getSideExpanded());
         },
 
-        // Hàm xử lý khi chọn các mục trên menu để nhảy trang
+        // Handle navigation from side menu
         onSideItemSelect: function (oEvent) {
             var sKey = oEvent.getParameter("item").getKey();
             
