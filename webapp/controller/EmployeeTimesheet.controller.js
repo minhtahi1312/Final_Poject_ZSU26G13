@@ -182,11 +182,12 @@ sap.ui.define([
             var oModel = oView.getModel();
             var that = this;
 
-            var sRequestType = oView.byId("selectRequestType").getSelectedKey();
-            var sProposedIn = oView.byId("tpProposedIn").getValue();
-            var sProposedOut = oView.byId("tpProposedOut").getValue();
-            var fOTHours = parseFloat(oView.byId("inputOTHours").getValue()) || 0;
-            var sEmployeeComment = oView.byId("inputReason").getValue();
+          // Lấy dữ liệu từ form trong Fragment
+          var sRequestType = oView.byId("selectRequestType").getSelectedKey();
+          var sProposedIn = oView.byId("tpProposedIn").getValue();
+          var sProposedOut = oView.byId("tpProposedOut").getValue();
+          var fOTHours = parseFloat(oView.byId("inputOTHours").getValue()) || 0;
+          var sEmployeeComment = oView.byId("inputReason").getValue();
 
             if (!sProposedIn || !sProposedOut || !sEmployeeComment) {
                 MessageBox.warning(this._getI18nText("msgFillMandatory"));
