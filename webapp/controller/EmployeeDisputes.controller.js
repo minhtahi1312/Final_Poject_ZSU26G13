@@ -22,11 +22,24 @@ sap.ui.define([
         },
 
         _onRouteMatched: function () {
-            var oTable = this.byId("disputesTable");
-            if (!oTable) return;
-            var oBinding = oTable.getBinding("items");
-            if (oBinding) oBinding.refresh(true);
-        },
+    var oTable = this.byId("disputesTable");
+
+    if (!oTable) {
+        return;
+    }
+
+    var oBinding = oTable.getBinding("items");
+
+    if (oBinding) {
+        var oSorter = new sap.ui.model.Sorter(
+            "WorkDate",
+            true
+        );
+
+        oBinding.sort(oSorter);
+        oBinding.refresh(true);
+    }
+},
 
         // =========================================================
         // FILTERING & VALUE HELPS
@@ -126,7 +139,16 @@ sap.ui.define([
             }
 
             var oBinding = this.byId("disputesTable").getBinding("items");
-            if (oBinding) oBinding.filter(aFilters);
+            if (oBinding) {
+    oBinding.filter(aFilters);
+
+    oBinding.sort(
+        new sap.ui.model.Sorter(
+            "WorkDate",
+            true
+        )
+    );
+}
         },
 
         onReset: function () {
@@ -136,7 +158,16 @@ sap.ui.define([
             oRequestTypeInput.data("selectedKey", "");
 
             var oBinding = this.byId("disputesTable").getBinding("items");
-            if (oBinding) oBinding.filter([]);
+            if (oBinding) {
+    oBinding.filter([]);
+
+    oBinding.sort(
+        new sap.ui.model.Sorter(
+            "WorkDate",
+            true
+        )
+    );
+}
         },
 
         // =========================================================
@@ -190,11 +221,26 @@ sap.ui.define([
                 method: "POST",
                 urlParameters: { DisputeId: sDisputeId },
                 success: function () {
-                    BusyIndicator.hide();
-                    MessageToast.show(that._getI18nText("msgCancelSuccess"));
-                    var oBinding = that.byId("disputesTable").getBinding("items");
-                    if (oBinding) oBinding.refresh(true);
-                },
+    BusyIndicator.hide();
+
+    MessageToast.show(
+        that._getI18nText("msgCancelSuccess")
+    );
+
+    var oBinding = that.byId("disputesTable").getBinding("items");
+
+    if (oBinding) {
+
+        oBinding.sort(
+            new sap.ui.model.Sorter(
+                "WorkDate",
+                true
+            )
+        );
+
+        oBinding.refresh(true);
+    }
+},
                 error: function (oError) {
                     BusyIndicator.hide();
                     console.error("Error calling /cancelReport:", oError);

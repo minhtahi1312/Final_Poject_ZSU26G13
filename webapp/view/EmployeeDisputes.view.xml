@@ -6,7 +6,7 @@
     <Page id="disputesPage" title="{i18n>titleDisputesHistory}" showHeader="true">
         <content>
             <VBox id="vbDisputesContainer" class="sapUiTinyMargin">
-                <fb:FilterBar id="filterBarDisputes" search=".onSearch" reset=".onReset" showClearOnFB="true">
+                <fb:FilterBar id="filterBarDisputes" search=".onSearch" reset=".onReset" clear=".onReset" showClearOnFB="true">
                     <fb:filterGroupItems>
                         <fb:FilterGroupItem id="fgDispWorkDate" name="WorkDateGroup" label="{i18n>lblWorkDate}" groupName="Group1" visibleInFilterBar="true">
                             <fb:control>
@@ -32,24 +32,61 @@
                     </headerToolbar>
                     
                     <columns>
-                        <Column id="colWorkDate"><Text id="txtWorkDate" text="{i18n>lblWorkDate}"/></Column>
-                        <Column id="colRequestType"><Text id="txtRequestType" text="{i18n>colReqType}"/></Column>
-                        <Column id="colProposedIn"><Text id="txtProposedIn" text="{i18n>colProposedIn}"/></Column>
-                        <Column id="colProposedOut"><Text id="txtProposedOut" text="{i18n>colProposedOut}"/></Column>
-                        <Column id="colComment" width="15rem"><Text id="txtComment" text="{i18n>colReason}"/></Column>
-                        <Column id="colStatus"><Text id="txtStatus" text="{i18n>colStatus}"/></Column>
-                        <Column id="colApproverComment" width="15rem"><Text id="txtApproverCommentHeader" text="{i18n>colApproverComment}"/></Column>
-                    </columns>
+    <!-- Cột Ngày: Căn giữa nhẹ hoặc trái -->
+    <Column id="colWorkDate" width="8rem">
+        <Text id="txtWorkDate" text="{i18n>lblWorkDate}"/>
+    </Column>
+
+    <!-- Cột Loại yêu cầu: Căn giữa để thẳng hàng với Status -->
+    <Column id="colRequestType" hAlign="Center" width="9rem">
+        <Text id="txtRequestType" text="{i18n>colReqType}"/>
+    </Column>
+
+    <!-- Cột Giờ vào: Căn giữa -->
+    <Column id="colProposedIn" hAlign="Center" width="7rem">
+        <Text id="txtProposedIn" text="{i18n>colProposedIn}"/>
+    </Column>
+
+    <!-- Cột Giờ ra: Căn giữa -->
+    <Column id="colProposedOut" hAlign="Center" width="7rem">
+        <Text id="txtProposedOut" text="{i18n>colProposedOut}"/>
+    </Column>
+
+    <!-- Cột Lý do: Căn trái, để tự co giãn chiếm không gian trống -->
+    <Column id="colComment" minScreenWidth="Tablet" demandPopin="true">
+        <Text id="txtComment" text="{i18n>colReason}"/>
+    </Column>
+
+    <!-- Cột Trạng thái: Căn giữa để badge nằm ngay ngắn -->
+    <Column id="colStatus" hAlign="Center" width="9rem">
+        <Text id="txtStatus" text="{i18n>colStatus}"/>
+    </Column>
+
+    <!-- Cột Ý kiến người duyệt: Căn trái, để tự co giãn -->
+    <Column id="colApproverComment" minScreenWidth="Tablet" demandPopin="true">
+        <Text id="txtApproverCommentHeader" text="{i18n>colApproverComment}"/>
+    </Column>
+</columns>
 
                     <items>
                         <ColumnListItem id="itemDispute">
                             <cells>
-                                <Text id="txtDate" text="{path:'WorkDate', type:'sap.ui.model.type.Date', formatOptions:{style:'medium'}}"/>
-                                <Text id="txtReqType" text="{RequestType}"/>
+                               <Text id="txtDate" text="{path: 'WorkDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd/MM/yyyy'}}"/>
+                                <ObjectStatus id="txtReqType"
+              text="{RequestType}"
+              state="{= ${RequestType} === 'OVERTIME' || ${RequestType} === 'REMOVE_WAR' ? 'Success' : 
+                      (${RequestType} === 'LATE_COM' || ${RequestType} === 'EAR_LEV' ? 'Warning' : 
+                      (${RequestType} === 'MISS_SWI' ? 'Error' : 
+                      (${RequestType} === 'LEAVE' ? 'Information' : 'None'))) }" />
                                 <Text id="txtIn" text="{path:'ProposedIn', formatter: '.formatEdmTime'}"/>
                                 <Text id="txtOut" text="{path:'ProposedOut', formatter: '.formatEdmTime'}"/>
                                 <Text id="txtReason" text="{EmployeeComment}" wrapping="true" renderWhitespace="true" class="sapUiSelectable forceWordBreak" />
-                                <ObjectStatus id="objStatus" text="{DisputeStatus}"/>
+                               <ObjectStatus id="objStatus"
+              text="{DisputeStatus}" 
+              inverted="true"
+              state="{= ${DisputeStatus} === 'APPROVED' ? 'Success' : 
+                      (${DisputeStatus} === 'PENDING' ? 'Warning' : 
+                      (${DisputeStatus} === 'CANCELLED' || ${DisputeStatus} === 'REJECTED' ? 'Error' : 'None')) }" />
                                 <Text id="txtApproverComment" text="{ApproverComment}" wrapping="true" renderWhitespace="true" class="sapUiSelectable forceWordBreak" />
                             </cells>
                         </ColumnListItem>

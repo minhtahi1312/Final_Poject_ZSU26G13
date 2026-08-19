@@ -7,7 +7,7 @@
         <content>
           <VBox id="vbTimesheetContainer" class="sapUiTinyMargin">
     
-            <fb:FilterBar id="filterBar" search=".onSearch" reset=".onReset" showClearOnFB="true">
+            <fb:FilterBar id="filterBar" search=".onSearch" reset=".onReset" clear=".onReset" showClearOnFB="true">
                 <fb:filterGroupItems>
                     <fb:FilterGroupItem id="idWorkDateFilterGroup" name="WorkDateGroup" label="{i18n>lblWorkDate}" groupName="Group1" visibleInFilterBar="true">
                         <fb:control>
@@ -23,7 +23,7 @@
                 </fb:filterGroupItems>
             </fb:FilterBar>
 
-            <Table id="timesheetTable" items="{path: '/WorkingTime', parameters: {mode: 'OneWay'}}" mode="SingleSelectLeft" growing="true" growingThreshold="10" growingScrollToLoad="false" growingTriggerText="More">
+            <Table id="timesheetTable" items="{path: '/WorkingTime', sorter: { path: 'WorkDate', descending: true }, parameters: {mode: 'OneWay'}}" mode="SingleSelectLeft" growing="true" growingThreshold="10" growingScrollToLoad="false" growingTriggerText="More">
                 <headerToolbar>
                     <OverflowToolbar id="tableHeader">
                         <Title id="tableTitle" text="{i18n>titleMyTimesheetData}" level="H2"/>
@@ -32,29 +32,48 @@
                     </OverflowToolbar>
                 </headerToolbar>
                 <columns>
-                    <Column id="tsColDate"><Text id="tsLblDate" text="{i18n>lblWorkDate}" /></Column>
-                    <Column id="tsColShift"><Text id="tsLblShift" text="{i18n>lblShiftCode}" /></Column>
-                    <Column id="tsColIn"><Text id="tsLblIn" text="{i18n>colCheckIn}" /></Column>
-                    <Column id="tsColOut"><Text id="tsLblOut" text="{i18n>colCheckOut}" /></Column>
-                    <Column id="tsColTotHours"><Text id="tsLblTotHours" text="{i18n>colActualHours}" /></Column>
-                    <Column id="tsColHours"><Text id="tsLblHours" text="{i18n>colStdHours}" /></Column>
-                    <Column id="tsColOt"><Text id="tsLblOt" text="{i18n>colOtHours}" /></Column>
-                    <Column id="tsColStatus"><Text id="tsLblStatus" text="{i18n>colStatus}" /></Column> 
-                </columns>
+    <Column id="tsColDate"><Text id="tsLblDate" text="{i18n>lblWorkDate}" /></Column>
+    <Column id="tsColShift"><Text id="tsLblShift" text="{i18n>lblShiftCode}" /></Column>
+    <Column id="tsColIn" hAlign="Center"><Text id="tsLblIn" text="{i18n>colCheckIn}" /></Column>
+    <Column id="tsColOut" hAlign="Center"><Text id="tsLblOut" text="{i18n>colCheckOut}" /></Column>
+    <Column id="tsColTotHours" hAlign="Center"><Text id="tsLblTotHours" text="{i18n>colActualHours}" /></Column>
+    <Column id="tsColHours" hAlign="Center"><Text id="tsLblHours" text="{i18n>colStdHours}" /></Column>
+    <Column id="tsColOt" hAlign="Center"><Text id="tsLblOt" text="{i18n>colOtHours}" /></Column>
+    <Column id="tsColStatus" hAlign="Center"><Text id="tsLblStatus" text="{i18n>colStatus}" /></Column> 
+</columns>
                 <items>
-                    <ColumnListItem id="tsRowTemplate">
-                        <cells>
-                            <Text id="tsCellTsDate" text="{path: 'WorkDate', type: 'sap.ui.model.type.Date', formatOptions: {style: 'medium'}}" />
-                            <Text id="tsCellTsShift" text="{ShiftId}" />
-                            <Text id="tsCellTsIn" text="{path: 'ActIn', formatter: '.formatEdmTime'}" />
-                            <Text id="tsCellTsOut" text="{path: 'ActOut', formatter: '.formatEdmTime'}" />
-                            <Text id="tsCellTsTotHours" text="{TotHours}" />
-                            <Text id="tsCellTsHours" text="{WorkHours}" />
-                            <Text id="tsCellTsOt" text="{OtHours}" />
-                            <ObjectStatus id="tsCellTsStatus" text="{status}" state="{= ${status} === 'APPROVED' ? 'Success' : 'Warning' }" />
-                        </cells>
-                    </ColumnListItem>
-                </items>
+    <ColumnListItem id="tsRowTemplate">
+        <cells>
+            <Text id="tsCellTsDate" text="{path: 'WorkDate', type: 'sap.ui.model.type.Date', formatOptions: {pattern: 'dd/MM/yyyy'}}" />
+            <Text id="tsCellTsShift" text="{ShiftId}" />
+            <Text id="tsCellTsIn" text="{path: 'ActIn', formatter: '.formatEdmTime'}" />
+            <Text id="tsCellTsOut" text="{path: 'ActOut', formatter: '.formatEdmTime'}" />
+
+            <!-- Giờ thực tế: Xanh khi >= giờ chuẩn, Đỏ khi < giờ chuẩn -->
+            <ObjectNumber id="tsCellTsTotHours" 
+                          number="{TotHours}" 
+                          state="{= parseFloat(${TotHours}) >= parseFloat(${WorkHours}) ? 'Success' : 'Error' }" />
+
+            <!-- Giờ chuẩn -->
+            <ObjectNumber id="tsCellTsHours" number="{WorkHours}" />
+
+            <!-- Giờ OT: Màu cam khi > 0 -->
+            <ObjectNumber id="tsCellTsOt" 
+                          number="{OtHours}" 
+                          state="Warning" 
+                          visible="{= parseFloat(${OtHours}) > 0 }" />
+
+            <!-- Status: Màu và Icon đồng bộ chuẩn màn HR -->
+            <ObjectStatus id="tsCellTsStatus"
+              text="{status}" 
+              inverted="true"
+              state="{= ${status} === 'COMPLETED' || ${status} === 'COMPLETE' ? 'Success' : 
+                      (${status} === 'ABSENT' ? 'Warning' : 
+                      (${status} === 'WARNING' ? 'Error' :
+                      (${status} === 'LEAVE' ? 'Information' : 'None'))) }" />
+        </cells>
+    </ColumnListItem>
+</items>
             </Table>
         </VBox>
         </content>
