@@ -71,18 +71,18 @@ sap.ui.define(
             case "COMPLETE":
             case "COMPLETED":
             case "APPROVED":
-              return "Success"; // Màu xanh lá
+              return "Success";
             case "ABSENT":
             case "REJECTED":
-              return "Error"; // Màu đỏ
+              return "Error";
             case "WARNING":
             case "EARLY_OUT":
-              return "Warning"; // Màu cam cảnh báo
+              return "Warning";
             case "LEAVE":
-              return "Information"; // Màu xanh dương nhạt
+              return "Information";
             case "CHECK_IN":
             default:
-              return "None"; // Màu xám trung tính chuẩn như HR
+              return "None";
           }
         },
 
@@ -91,17 +91,17 @@ sap.ui.define(
             case "COMPLETE":
             case "COMPLETED":
             case "APPROVED":
-              return "sap-icon://accept"; // Icon tròn xanh lá
+              return "sap-icon://accept";
             case "ABSENT":
             case "REJECTED":
-              return "sap-icon://alert"; // Tam giác đỏ
+              return "sap-icon://alert";
             case "WARNING":
             case "EARLY_OUT":
-              return "sap-icon://message-warning"; // Icon cảnh báo cam
+              return "sap-icon://message-warning";
             case "CHECK_IN":
-              return "sap-icon://sys-enter-2"; // Dấu tích xám
+              return "sap-icon://sys-enter-2";
             case "LEAVE":
-              return "sap-icon://away"; // Icon vắng nghỉ
+              return "sap-icon://away";
             default:
               return "";
           }
@@ -172,7 +172,7 @@ sap.ui.define(
                       oInput.setValue(oSelectedItem.getTitle());
                       oInput.data("selectedKey", sKey);
                     }
-                    that.onSearch(); // Tự động lọc và sắp xếp lại ngày mới nhất
+                    that.onSearch();
                   }
                 },
               });
@@ -182,7 +182,6 @@ sap.ui.define(
             },
             error: function (oError) {
               BusyIndicator.hide();
-              console.error("Error loading /WorkingTime:", oError);
               MessageBox.error(that._getI18nText("msgLoadStatusError"));
             },
           });
@@ -203,7 +202,6 @@ sap.ui.define(
                 0,
               ),
             );
-
             aFilters.push(
               new Filter("WorkDate", FilterOperator.EQ, dFilterDate),
             );
@@ -221,8 +219,6 @@ sap.ui.define(
           if (oBinding) {
             // Filter
             oBinding.filter(aFilters);
-
-            // Sort WorkDate mới nhất -> cũ nhất
             oBinding.sort(new Sorter("WorkDate", true));
           }
         },
@@ -238,15 +234,9 @@ sap.ui.define(
 
           if (oBinding) {
             oBinding.filter([]);
-
-            // Giữ thứ tự ngày mới nhất -> cũ nhất
             oBinding.sort(new Sorter("WorkDate", true));
           }
         },
-
-        // =========================================================
-        // UTILITIES & ACTIONS
-        // =========================================================
 
         formatEdmTime: function (oTime) {
           if (
@@ -295,7 +285,22 @@ sap.ui.define(
             return;
           }
 
+          var oContext = oSelectedItem.getBindingContext();
+          var oActIn = oContext.getProperty("ActIn");
+          var oActOut = oContext.getProperty("ActOut");
+
+          var sFormattedIn = this.formatEdmTime(oActIn);
+          var sFormattedOut = this.formatEdmTime(oActOut);
+
+          if (sFormattedIn === "--:--:--") {
+            sFormattedIn = "";
+          }
+          if (sFormattedOut === "--:--:--") {
+            sFormattedOut = "";
+          }
+
           var sFragmentName = "my.report.zmydisputes.view.DisputeDialog";
+          var that = this;
 
           if (!this._pDialog) {
             this._pDialog = Fragment.load({
@@ -308,6 +313,21 @@ sap.ui.define(
             });
           }
           this._pDialog.then(function (oDialog) {
+            // 3. Tự động điền giờ của dòng được chọn vào form trước khi hiển thị popup
+            oView.byId("tpProposedIn").setValue(sFormattedIn);
+            oView.byId("tpProposedOut").setValue(sFormattedOut);
+
+            // Reset các trường nhập lý do & OT về trạng thái ban đầu
+            oView.byId("inputReason").setValue("");
+            oView.byId("inputOTHours").setValue("");
+
+            // Cập nhật lại trạng thái hiển thị
+            that.onRequestTypeChange({
+              getSource: function () {
+                return oView.byId("selectRequestType");
+              },
+            });
+
             oDialog.open();
           });
         },
@@ -373,75 +393,52 @@ sap.ui.define(
             // Nếu dữ liệu là chuỗi HH:mm:ss
             if (typeof vTime === "string") {
               var aParts = vTime.split(":");
-
               var iHours = parseInt(aParts[0], 10) || 0;
               var iMinutes = parseInt(aParts[1], 10) || 0;
               var iSeconds = parseInt(aParts[2], 10) || 0;
-
               var iMs = (iHours * 3600 + iMinutes * 60 + iSeconds) * 1000;
-
               return {
                 __edmType: "Edm.Time",
                 ms: iMs,
               };
             }
-
             return null;
           };
-
           BusyIndicator.show(0);
-
           oModel.callFunction("/createReport", {
             method: "POST",
-
             urlParameters: {
               Pernr: sPernr,
-
               WorkDate: oDate,
-
               ShiftId: sShiftId,
-
               request_type: sRequestType,
-
               proposed_in:
                 sRequestType === "REMOVE_WAR"
                   ? formatTimeForODataV2(oActIn)
                   : formatTimeForODataV2(sProposedIn),
-
               proposed_out:
                 sRequestType === "REMOVE_WAR"
                   ? formatTimeForODataV2(oActOut)
                   : formatTimeForODataV2(sProposedOut),
-
               ot_hours: sRequestType === "OVERTIME" ? fOTHours : 0,
-
               employee_comment: sEmployeeComment,
             },
 
             success: function () {
               BusyIndicator.hide();
-
               MessageToast.show(that._getI18nText("msgDisputeSuccess"));
-
               oDialog.close();
 
               oView.byId("tpProposedIn").setValue("");
               oView.byId("tpProposedOut").setValue("");
               oView.byId("inputOTHours").setValue("");
               oView.byId("inputReason").setValue("");
-
               oView.byId("selectRequestType").setSelectedKey("");
-
               oView.byId("lblProposedIn").setVisible(true);
-
               oView.byId("tpProposedIn").setVisible(true);
-
               oView.byId("lblProposedOut").setVisible(true);
-
               oView.byId("tpProposedOut").setVisible(true);
-
               oView.byId("vbOTSection").setVisible(false);
-
               var oBinding = that.byId("timesheetTable").getBinding("items");
 
               if (oBinding) {
@@ -451,17 +448,11 @@ sap.ui.define(
 
             error: function (oError) {
               BusyIndicator.hide();
-
-              console.error("Error calling /createReport:", oError);
-
               var sMsg = that._getI18nText("msgDisputeSubmitError");
-
               try {
                 var oErrObj = JSON.parse(oError.responseText);
-
                 sMsg += " " + oErrObj.error.message.value;
               } catch (e) {}
-
               MessageBox.error(sMsg);
             },
           });

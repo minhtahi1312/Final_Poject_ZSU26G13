@@ -49,7 +49,6 @@
             <Text id="tsCellTsIn" text="{path: 'ActIn', formatter: '.formatEdmTime'}" />
             <Text id="tsCellTsOut" text="{path: 'ActOut', formatter: '.formatEdmTime'}" />
 
-            <!-- Giờ thực tế: Xanh khi >= giờ chuẩn, Đỏ khi < giờ chuẩn -->
             <ObjectNumber id="tsCellTsTotHours" 
                           number="{TotHours}" 
                           state="{= parseFloat(${TotHours}) >= parseFloat(${WorkHours}) ? 'Success' : 'Error' }" />
@@ -63,7 +62,6 @@
                           state="Warning" 
                           visible="{= parseFloat(${OtHours}) > 0 }" />
 
-            <!-- Status: Màu và Icon đồng bộ chuẩn màn HR -->
             <ObjectStatus id="tsCellTsStatus"
               text="{status}" 
               inverted="true"

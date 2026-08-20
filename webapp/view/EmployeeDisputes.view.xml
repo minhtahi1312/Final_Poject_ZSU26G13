@@ -32,37 +32,31 @@
                     </headerToolbar>
                     
                     <columns>
-    <!-- Cột Ngày: Căn giữa nhẹ hoặc trái -->
+   
     <Column id="colWorkDate" width="8rem">
         <Text id="txtWorkDate" text="{i18n>lblWorkDate}"/>
     </Column>
 
-    <!-- Cột Loại yêu cầu: Căn giữa để thẳng hàng với Status -->
     <Column id="colRequestType" hAlign="Center" width="9rem">
         <Text id="txtRequestType" text="{i18n>colReqType}"/>
     </Column>
 
-    <!-- Cột Giờ vào: Căn giữa -->
     <Column id="colProposedIn" hAlign="Center" width="7rem">
         <Text id="txtProposedIn" text="{i18n>colProposedIn}"/>
     </Column>
 
-    <!-- Cột Giờ ra: Căn giữa -->
     <Column id="colProposedOut" hAlign="Center" width="7rem">
         <Text id="txtProposedOut" text="{i18n>colProposedOut}"/>
     </Column>
 
-    <!-- Cột Lý do: Căn trái, để tự co giãn chiếm không gian trống -->
     <Column id="colComment" minScreenWidth="Tablet" demandPopin="true">
         <Text id="txtComment" text="{i18n>colReason}"/>
     </Column>
-
-    <!-- Cột Trạng thái: Căn giữa để badge nằm ngay ngắn -->
+    
     <Column id="colStatus" hAlign="Center" width="9rem">
         <Text id="txtStatus" text="{i18n>colStatus}"/>
     </Column>
 
-    <!-- Cột Ý kiến người duyệt: Căn trái, để tự co giãn -->
     <Column id="colApproverComment" minScreenWidth="Tablet" demandPopin="true">
         <Text id="txtApproverCommentHeader" text="{i18n>colApproverComment}"/>
     </Column>
