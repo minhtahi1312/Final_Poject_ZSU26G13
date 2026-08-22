@@ -459,6 +459,7 @@ sap.ui.define(
             RequestType: "LEAVE",
             EmployeeComment: sReason,
             DisputeStatus: "PENDING",
+            CreatedAt: new Date(),
           };
 
           BusyIndicator.show(0);
